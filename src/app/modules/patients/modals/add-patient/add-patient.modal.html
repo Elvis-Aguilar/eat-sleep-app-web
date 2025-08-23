@@ -1,0 +1,97 @@
+<div class="text-center mb-2">
+  <h1 class="text-3xl font-bold text-primary">Crear Paciente</h1>
+</div>
+
+<form [formGroup]="addForm" class="space-y-4">
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Nombre completo</span>
+      <span class="text-xs text-error">*</span>
+    </legend>
+    <input
+      type="text"
+      formControlName="fullName"
+      name="fullName"
+      class="input input-bordered w-full"
+      required="true"
+      minlength="2"
+      [class.input-error]="addForm.get('fullName')?.touched && addForm.get('fullName')?.invalid"
+      [class.input-success]="addForm.get('fullName')?.touched && addForm.get('fullName')?.valid"
+    />
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>CUI</span>
+      <span class="text-xs text-error">*</span>
+    </legend>
+    <input
+      type="text"
+      formControlName="cui"
+      name="cui"
+      class="input input-bordered w-full"
+      required="true"
+      minlength="2"
+      [class.input-error]="addForm.get('cui')?.touched && addForm.get('cui')?.invalid"
+      [class.input-success]="addForm.get('cui')?.touched && addForm.get('cui')?.valid"
+    />
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Fecha de nacimiento</span>
+    </legend>
+    <input
+      type="date"
+      formControlName="birthDate"
+      name="birthDate"
+      class="input input-bordered w-full"
+      [class.input-error]="addForm.get('birthDate')?.touched && addForm.get('birthDate')?.invalid"
+      [class.input-success]="addForm.get('birthDate')?.touched && addForm.get('birthDate')?.valid"
+    />
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Teléfono</span>
+    </legend>
+    <input
+      type="text"
+      formControlName="phone"
+      name="phone"
+      class="input input-bordered w-full"
+      minlength="2"
+      [class.input-error]="addForm.get('phone')?.touched && addForm.get('phone')?.invalid"
+      [class.input-success]="addForm.get('phone')?.touched && addForm.get('phone')?.valid"
+    />
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Email</span>
+    </legend>
+    <input
+      type="text"
+      formControlName="email"
+      name="email"
+      class="input input-bordered w-full"
+      minlength="2"
+      email="true"
+      [class.input-error]="addForm.get('email')?.touched && addForm.get('email')?.invalid"
+      [class.input-success]="addForm.get('email')?.touched && addForm.get('email')?.valid"
+    />
+  </fieldset>
+
+  <div class="flex justify-evenly mb-2">
+    <button
+      class="btn transition-all duration-300 ease-in-out"
+      [class.btn-primary]="!creating"
+      [class.btn-disabled]="creating || this.addForm.invalid"
+      (click)="addPatient()"
+    >
+      @if (creating) {
+      <span class="loading loading-dots loading-xs"></span>
+      } @else { Crear Paciente }
+    </button>
+  </div>
+</form>

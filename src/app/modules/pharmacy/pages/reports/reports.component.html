@@ -1,0 +1,221 @@
+<div class="min-h-screen bg-base-200">
+  <!-- Header -->
+  <header class="navbar bg-base-100 shadow">
+    <div class="flex-1">
+      <h1 class="text-2xl font-bold ml-4">Reportes</h1>
+    </div>
+  </header>
+
+  <!-- Body -->
+  <main class="container mx-auto p-4">
+    <div class="tabs tabs-boxed mb-4">
+      <a class="tab" [class.tab-active]="activeTab === 'medicamentos'"
+        (click)="activeTab = 'medicamentos'">Medicamentos</a>
+      <a class="tab" [class.tab-active]="activeTab === 'ganancias'" (click)="activeTab = 'ganancias'">Ganancias</a>
+      <a class="tab" [class.tab-active]="activeTab === 'ventas-empleado'" (click)="activeTab = 'ventas-empleado'">Ventas
+        por Empleado</a>
+    </div>
+
+    <!-- Tab 1: Medicamentos -->
+    <div *ngIf="activeTab === 'medicamentos'">
+      <div class="flex gap-2 mb-4">
+        <input type="text" [(ngModel)]="medSearchTerm" placeholder="Buscar medicamento..."
+          class="input input-bordered w-full max-w-xs" />
+        <button class="btn btn-primary">Buscar</button>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="table w-full">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Cantidad</th>
+              <th>Mínimo</th>
+              <th>Precio Unitario</th>
+              <th>Costo</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of filteredMedicaments; track $index) {
+            <tr [ngClass]="{'bg-error bg-opacity-20': item.stock <= item.minStock}">
+              <td>{{$index+1}}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.stock }}</td>
+              <td>{{ item.minStock }}</td>
+              <td>{{ item.unitPrice | currency:'Q' }}</td>
+              <td>{{ (item.stock * item.unitPrice) | currency:'Q' }}</td>
+            </tr>
+            }
+
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-4 text-lg font-bold">
+        Valor Total del Inventario: {{ calculateInventoryTotal() | currency:'Q' }}
+      </div>
+    </div>
+
+    <!-- Tab 2: Ganancias -->
+    <div *ngIf="activeTab === 'ganancias'">
+      <div class="flex flex-col sm:flex-row gap-4 mb-4">
+        <input type="text" [(ngModel)]="profitSearchTerm" placeholder="Buscar venta..."
+          class="input input-bordered w-full max-w-xs" />
+        <div class="flex gap-2">
+          <input type="date" [(ngModel)]="startDate" class="input input-bordered" />
+          <input type="date" [(ngModel)]="endDate" class="input input-bordered" />
+        </div>
+        <button class="btn btn-primary" (click)="gerReportSaleMedicine()">Generar Reporte</button>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="table w-full">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Medicamentos</th>
+              <th>Total Vendido</th>
+              <th>Ingresos</th>
+              <th>Ganancia</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (sale of filteredProfits; track $index) {
+            <ng-container>
+              <tr>
+                <td>{{ $index+1 }}</td>
+                <td>{{ sale.name }}</td>
+                <td>{{ sale.totalSold }}</td>
+                <td>{{ sale.totalIncome| currency:'Q' }}</td>
+                <td>{{ sale.totalProfit | currency:'Q' }}</td>
+                <td>
+                  <button class="btn btn-xs btn-outline" (click)="sale.showDetails = !sale.showDetails">
+                    {{ sale.showDetails ? 'Ocultar' : 'Mostrar' }} Detalles
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="sale.showDetails" class="bg-base-100">
+                <td colspan="6">
+                  <div class="overflow-x-auto">
+                    <table class="table w-full">
+                      <thead>
+                        <tr>
+                          <th>Fecha</th>
+                          <th>Cantidad</th>
+                          <th>Precio Unitario</th>
+                          <th>Subtotal</th>
+                          <th>Costos</th>
+                          <th>Ganancias</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (item of sale.items; track $index) {
+                        <tr>
+                          <td>{{ item.soldAt }}</td>
+                          <td>{{ item.quantity }}</td>
+                          <td>{{ item.unitPrice | currency:'Q' }}</td>
+                          <td>{{ item.Subtotal | currency:'Q' }}</td>
+                          <td>{{ item.SubCost | currency:'Q' }}</td>
+                          <td>{{ item.Profit| currency:'Q' }}</td>
+                        </tr>
+                        }
+
+                      </tbody>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+            }
+
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-4 text-lg font-bold">
+        Total de Ingresos: {{ calculateProfitTotal() | currency:'Q' }}
+      </div>
+    </div>
+
+    <!-- Tab 3: Ventas por Empleado -->
+    <div *ngIf="activeTab === 'ventas-empleado'">
+      <div class="flex flex-col sm:flex-row gap-4 mb-4">
+        <input type="text" [(ngModel)]="employeeSearchTerm" placeholder="Buscar empleado..."
+          class="input input-bordered w-full max-w-xs" />
+        <div class="flex gap-2">
+          <input type="date" [(ngModel)]="startDate" class="input input-bordered" />
+          <input type="date" [(ngModel)]="endDate" class="input input-bordered" />
+        </div>
+        <button class="btn btn-primary" (click)="getReportEmployees()">Generar Reporte</button>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="table w-full">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>CUI</th>
+              <th>Total de Ventas</th>
+              <th>Ingresos</th>
+              <th>Ganancias</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (employee of filteredEmployeeSales; track $index) {
+            <ng-container>
+              <tr>
+                <td>{{ employee.employeeName }}</td>
+                <td>{{ employee.cui }}</td>
+                <td>{{ employee.totalSold }}</td>
+                <td>{{ employee.totalIncome | currency:'Q' }}</td>
+                <td>{{ employee.totalProfit | currency:'Q' }}</td>
+                <td>
+                  <button class="btn btn-xs btn-outline" (click)="employee.showDetails = !employee.showDetails">
+                    {{ employee.showDetails ? 'Ocultar' : 'Mostrar' }} Detalles
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="employee.showDetails" class="bg-base-100">
+                <td colspan="6">
+                  <div class="overflow-x-auto">
+                    <table class="table w-full">
+                      <thead>
+                        <tr>
+                          <th>Fecha</th>
+                          <th>Medicamento</th>
+                          <th>Cantidad</th>
+                          <th>Precio Unitario</th>
+                          <th>Subtotal</th>
+                          <th>Ganancia</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for (item of employee.items; track $index) {
+                        <tr>
+                          <td>{{ item.soldAt }}</td>
+                          <td>{{ item.name }}</td>
+                          <td>{{ item.quantity }}</td>
+                          <td>{{ item.unitPrice | currency:'Q' }}</td>
+                          <td>{{ item.Subtotal| currency:'Q' }}</td>
+                          <td>{{ item.Profit | currency:'Q' }}</td>
+                        </tr>
+                        }
+
+                      </tbody>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+            }
+
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-4 text-lg font-bold">
+        Total de Ingresos: {{ calculateEmployeeSalesTotal() | currency:'Q' }}
+      </div>
+    </div>
+  </main>
+</div>

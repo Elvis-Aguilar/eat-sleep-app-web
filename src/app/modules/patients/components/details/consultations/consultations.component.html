@@ -1,0 +1,65 @@
+<div class="card bg-base-300 shadow-md h-full">
+  <div class="card-body">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="card-title text-secondary">Consultas Médicas</h2>
+      <button
+        data-cy="create-consultation"
+        class="btn btn-xs btn-primary"
+        (click)="createConsultation()"
+      >
+        Nueva Consulta
+      </button>
+    </div>
+
+    @if (!consultations?.content?.length) {
+    <div class="text-center text-accent h-full flex items-center">
+      <p class="text-2xl">No se encontraron consultas</p>
+    </div>
+    } @else {
+    <div class="overflow-x-auto">
+      <table class="table table-sm">
+        <thead class="text-accent">
+          <tr>
+            <th>Fecha</th>
+            <th>Concepto</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (consult of consultations?.content; track consult.id) {
+          <tr class="even:bg-base-200 hover:bg-accent-content">
+            <td>{{ consult.createdAt | date : "dd/MM/yyyy" }}</td>
+            <td>{{ consult.concept }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flex justify-center items-center gap-2 mt-auto">
+      <button
+        class="btn btn-xs btn-ghost"
+        [class.btn-disable]="consultations?.first"
+        [class.text-primary]="!consultations?.first"
+        (click)="!consultations?.first && fetchConsultations(false, true)"
+      >
+        <i-lucide [img]="Previous" />
+      </button>
+
+      <span class="text-xs text-center">
+        {{ (consultations?.number || 0) + 1 }} de
+        {{ consultations?.totalPages || 0 }}
+      </span>
+
+      <button
+        class="btn btn-xs btn-ghost"
+        [class.btn-disable]="consultations?.last"
+        [class.text-primary]="!consultations?.last"
+        (click)="!consultations?.last && fetchConsultations(true, false)"
+      >
+        <i-lucide [img]="Next" />
+      </button>
+    </div>
+    }
+  </div>
+</div>

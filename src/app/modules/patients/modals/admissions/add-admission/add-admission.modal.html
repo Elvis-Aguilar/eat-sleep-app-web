@@ -1,0 +1,68 @@
+<div class="text-center mb-2">
+  <h1 class="text-3xl font-bold text-primary">Internar Paciente</h1>
+</div>
+
+<form [formGroup]="addForm" class="space-y-4" autocomplete="off">
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Fecha de ingreso</span>
+      <span class="text-xs text-error">*</span>
+    </legend>
+    <input
+      type="date"
+      formControlName="admissionDate"
+      name="admissionDate"
+      class="input input-bordered w-full"
+      [required]="true"
+      [class.input-error]="addForm.get('admissionDate')?.touched && addForm.get('admissionDate')?.invalid"
+      [class.input-success]="addForm.get('admissionDate')?.touched && addForm.get('admissionDate')?.valid"
+    />
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Fecha de salida</span>
+    </legend>
+    <input
+      type="date"
+      formControlName="dischargeDate"
+      name="dischargeDate"
+      class="input input-bordered w-full"
+      [class.input-error]="addForm.get('dischargeDate')?.touched && addForm.get('dischargeDate')?.invalid"
+      [class.input-success]="addForm.get('dischargeDate')?.touched && addForm.get('dischargeDate')?.valid"
+    />
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Sala</span>
+      <span class="text-xs text-error">*</span>
+    </legend>
+    <select
+      formControlName="roomId"
+      name="roomId"
+      class="select select-bordered w-full"
+      required="true"
+      [class.select-error]="addForm.get('roomId')?.touched && addForm.get('roomId')?.invalid"
+      [class.select-success]="addForm.get('roomId')?.touched && addForm.get('roomId')?.valid"
+    >
+      <option disabled selected value="0">Seleccionar sala</option>
+      @for (room of rooms?.content; track room.id) {
+      <option [ngValue]="room.id">{{ room.number }}</option>
+      }
+    </select>
+  </fieldset>
+
+  <div class="flex justify-evenly mb-2">
+    <button
+      class="btn transition-all duration-300 ease-in-out"
+      [class.btn-primary]="!creating"
+      [class.btn-disabled]="creating || this.addForm.invalid"
+      (click)="addAdmission()"
+    >
+      @if (creating) {
+      <span class="loading loading-dots loading-xs"></span>
+      } @else { Internar Paciente }
+    </button>
+  </div>
+</form>

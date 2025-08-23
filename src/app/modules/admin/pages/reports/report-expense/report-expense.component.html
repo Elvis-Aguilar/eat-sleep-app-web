@@ -1,0 +1,100 @@
+<h1 class="text-xl font-bold text-center mb-6">Reporte de Egresos Por Area</h1>
+
+<!-- Filtros -->
+<div class="bg-base-100 shadow-xl rounded-xl p-4 mb-2 border border-success">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-3">
+
+        <!-- Filtro  -->
+        <div>
+            <label class="label">
+                <span class="label-text">Filtrar por Areas</span>
+            </label>
+            <select class="select select-bordered w-full btn btn-xs" [(ngModel)]="filter">
+                <option value=0>Todos</option>
+                <option value=1>Area Empleados</option>
+                <option value=2>Area Farmacia</option>
+            </select>
+        </div>
+
+        <div>
+            <label class="label font-semibold">Desde:</label>
+            <input type="date" class="input input-bordered w-full btn btn-sm" [(ngModel)]="startDate" />
+        </div>
+        <div>
+            <label class="label font-semibold">Hasta:</label>
+            <input type="date" class="input input-bordered w-full btn btn-sm" [(ngModel)]="endDate" />
+        </div>
+
+        <div>
+            <button class="btn btn-outline btn-primary mt-4" (click)="generetedReport()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                Generar Reporte
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<div class="overflow-x-auto bg-base-100 p-4 shadow-lg rounded-lg border border-secondary mb-2">
+    <div class="overflow-x-auto">
+        <table class="table table-zebra w-full">
+            <thead>
+                <tr class="bg-base-300">
+                    <th colspan="5" class="text-left font-bold text-md">Reporte de Egresos</th>
+                    <th class="text-right font-bold text-md text-green-600">TOTAL: Q{{getTotal()}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (reportPayEmployee) {
+                <!-- Área de Empleados -->
+                <tr class="bg-base-100">
+                    <td colspan="6" class="font-semibold text-accent">Área de Empleados<span
+                            class="float-right">SUBTOTAL: Q{{reportPayEmployee.totalAmount}}</span></td>
+                </tr>
+                <tr class="bg-base-300">
+                    <th colspan="2">Fecha de pago</th>
+                    <th colspan="2">Nombre Empleado</th>
+                    <th class="text-center">CUI</th>
+                    <th class="text-right">Pago</th>
+                </tr>
+                @for (item of reportPayEmployee.items; track $index) {
+                <tr>
+                    <td colspan="2">{{formatDateTime(item.paidAt)}}</td>
+                    <td colspan="2">{{item.fullName}}</td>
+                    <td class="text-center">{{item.cui}}</td>
+                    <td class="text-right">Q{{item.amount}}</td>
+                </tr>
+                }
+                }
+
+                @if (reportPurches) {
+                <!-- Pago de consultas -->
+                <tr class="bg-base-100">
+                    <td colspan="6" class="font-semibold text-accent">Área de Farmacia <span
+                            class="float-right">SUBTOTAL: Q{{reportPurches.amountExpense}}</span></td>
+                </tr>
+                <tr class="bg-base-300">
+                    <th>Fecha de compra</th>
+                    <th colspan="2">Nombre Producto</th>
+                    <th>Cantidad comprada</th>
+                    <th class="text-right">Costo unitario</th>
+                    <th class="text-right">Sub</th>
+                </tr>
+                @for (item of reportPurches.items; track $index) {
+                <tr>
+                    <td>{{formatDateTime(item.purchasedAt)}}</td>
+                    <td colspan="2">{{item.name}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td class="text-right">Q{{item.unitCost}}</td>
+                    <td class="text-right">Q{{item.unitCost * item.quantity}}</td>
+                </tr>
+                }
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>

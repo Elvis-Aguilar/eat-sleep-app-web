@@ -1,0 +1,91 @@
+<div class="text-center mb-2">
+  <h1 class="text-3xl font-bold text-primary">Asignar Empleados a Cirugía</h1>
+</div>
+
+<form [formGroup]="appendForm" class="space-y-4" autocomplete="off">
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Especialista</span>
+    </legend>
+
+    <select
+      formControlName="specialistId"
+      name="specialistId"
+      class="select select-bordered w-full"
+      [class.select-error]="!appendForm.get('specialistId')?.value && appendForm.get('specialistId')?.touched && appendForm.get('specialistId')?.invalid"
+      [class.select-success]="!appendForm.get('specialistId')?.value && appendForm.get('specialistId')?.touched && appendForm.get('specialistId')?.valid"
+    >
+      <option value="0">Seleccionar especialista (Opcional)</option>
+      @for (specialist of specialists; track specialist.employeeId) {
+      <option [ngValue]="specialist.employeeId">
+        {{ specialist.fullName }}
+      </option>
+      }
+    </select>
+  </fieldset>
+
+  <ng-container formArrayName="employeeIds">
+    @for (employee of getEmployeeIds().controls; track employee.value) {
+    <fieldset class="fieldset">
+      <legend class="fieldset-legend">
+        <span>Empleado #{{ $index + 1 }}</span>
+        <span class="text-xs text-error">*</span>
+      </legend>
+
+      <div class="join">
+        <select
+          [formControlName]="$index"
+          [name]="$index"
+          class="select select-bordered w-full"
+          required="true"
+          [class.select-error]="!employee.value && employee.touched && employee.invalid"
+          [class.select-success]="!employee.value && employee.touched && employee.valid"
+        >
+          @if (employee.value) {
+          <option selected [ngValue]="employee.value">
+            {{ getEmployee(employee.value)?.fullName || 'N/A' }}
+          </option>
+          } @else {
+          <option disabled value="0">Seleccionar empleado</option>
+          } @for (employee of getEmployees(); track employee.employeeId) {
+          <option [ngValue]="employee.employeeId">
+            {{ employee.fullName }}
+          </option>
+          }
+        </select>
+
+        <button
+          class="btn btn-xs btn-outline btn-error w-fit h-full"
+          (click)="removeEmployee($index)"
+        >
+          <i-lucide [img]="Trash" size="12" class="h-4 w-4" />
+        </button>
+      </div>
+    </fieldset>
+    }
+  </ng-container>
+
+  <div class="flex justify-evenly mb-2">
+    <button
+      class="btn btn-outline transition-all duration-300 ease-in-out"
+      [class.btn-primary]="!appending"
+      [class.btn-disabled]="appending || this.appendForm.invalid"
+      (click)="appendEmployeeInput()"
+    >
+      @if (appending) {
+      <span class="loading loading-dots loading-xs"></span>
+      } @else { Agregar Empleado }
+    </button>
+
+    <button
+      class="btn transition-all duration-300 ease-in-out"
+      [class.btn-primary]="!appending"
+      [class.btn-disabled]="appending || this.appendForm.invalid"
+      (click)="appendEmployee()"
+    >
+      @if (appending) {
+      <span class="loading loading-dots loading-xs"></span>
+      } @else { Asignar Empleados }
+    </button>
+  </div>
+</form>

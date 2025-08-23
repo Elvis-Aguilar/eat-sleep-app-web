@@ -1,0 +1,68 @@
+<div class="text-center mb-2">
+  <h1 class="text-3xl font-bold text-primary">Editar Ingreso del Paciente</h1>
+</div>
+
+<form [formGroup]="editForm" class="space-y-4" autocomplete="off">
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Fecha de ingreso</span>
+      <span class="text-xs text-error">*</span>
+    </legend>
+    <input
+      type="date"
+      formControlName="admissionDate"
+      name="admissionDate"
+      class="input input-bordered w-full"
+      [required]="true"
+      [class.input-error]="editForm.get('admissionDate')?.touched && editForm.get('admissionDate')?.invalid"
+      [class.input-success]="editForm.get('admissionDate')?.touched && editForm.get('admissionDate')?.valid"
+    />
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Fecha de salida</span>
+    </legend>
+    <input
+      type="date"
+      formControlName="dischargeDate"
+      name="dischargeDate"
+      class="input input-bordered w-full"
+      [class.input-error]="editForm.get('dischargeDate')?.touched && editForm.get('dischargeDate')?.invalid"
+      [class.input-success]="editForm.get('dischargeDate')?.touched && editForm.get('dischargeDate')?.valid"
+    />
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Sala</span>
+      <span class="text-xs text-error">*</span>
+    </legend>
+    <select
+      formControlName="roomId"
+      name="roomId"
+      class="select select-bordered w-full"
+      required="true"
+      [class.select-error]="editForm.get('roomId')?.touched && editForm.get('roomId')?.invalid"
+      [class.select-success]="editForm.get('roomId')?.touched && editForm.get('roomId')?.valid"
+    >
+      <option disabled selected value="0">Seleccionar sala</option>
+      @for (room of rooms?.content; track room.id) {
+      <option [ngValue]="room.id">{{ room.number }}</option>
+      }
+    </select>
+  </fieldset>
+
+  <div class="flex justify-evenly mb-2">
+    <button
+      class="btn transition-all duration-300 ease-in-out"
+      [class.btn-primary]="!editing"
+      [class.btn-disabled]="editing || this.editForm.invalid"
+      (click)="editAdmission()"
+    >
+      @if (editing) {
+      <span class="loading loading-dots loading-xs"></span>
+      } @else { Editar Ingreso del Paciente }
+    </button>
+  </div>
+</form>

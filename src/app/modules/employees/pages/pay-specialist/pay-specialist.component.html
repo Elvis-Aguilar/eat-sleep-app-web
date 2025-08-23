@@ -1,0 +1,36 @@
+
+<div class="space-y-6">
+    <h2 class="text-2xl font-bold">Pagos Pendientes a Medicos Especialistas</h2>
+
+    <!-- Encabezado -->
+    <div class="flex justify-between items-center">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @for (pay of paymentPerSpecialists; track $index) {
+            <div class="card bg-base-200 shadow-md border border-secondary">
+                <div class="card-body">
+                    <h3 class="card-title text-lg font-semibold text-accent">Pago A: </h3>
+                    <div class="text-sm space-y-1">
+                        <p><strong>Empleado:</strong> {{ pay.fullName }}</p>
+                        <p><strong>CUI:</strong> {{ pay.Cui }}</p>
+                        <hr />
+                        <p><strong>Cirugia:</strong> {{ pay.description }}</p>
+                        <p><strong>Fecha:</strong> {{ pay.performedDate }}</p>
+                        <p><strong>Pago a realizar (Q):</strong> {{ pay.specialistFee }}</p>
+                    </div>
+                    <!-- Botones de acción -->
+                    <div class="card-actions justify-end mt-4 space-x-2">
+                        <button class="btn btn-success btn-sm" (click)="createPayment(pay)">Pagar</button>
+                    </div>
+                </div>
+            </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal  respuesta-->
+<dialog #modal1 id="my_modal_1" class="modal">
+    <app-modal-msg [content]="contentModal" [title]="titleModal" [className]="calssValue"></app-modal-msg>
+</dialog>

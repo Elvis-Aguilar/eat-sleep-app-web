@@ -1,0 +1,74 @@
+<h1 class="text-xl font-bold text-center mb-6">Area de Hitorial Laboral</h1>
+
+<div class="space-y-6">
+    <!-- Bloque: Datos del empleado -->
+    <div class="bg-base-200 p-6 rounded-lg shadow space-y-4 border border-accent">
+        <h2 class="text-xl font-bold">Información del Empleado</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Nombre -->
+            <div>
+                <label class="label font-semibold">Nombre completo</label>
+                <input class="input input-bordered w-full text-lg" [value]="employee.fullName" disabled />
+            </div>
+            <!-- CUI -->
+            <div>
+                <label class="label font-semibold">CUI</label>
+                <input class="input input-bordered w-full text-lg" [value]="employee.cui" disabled />
+            </div>
+            <!-- Teléfono -->
+            <div>
+                <label class="label font-semibold">Teléfono</label>
+                <input class="input input-bordered w-full text-lg" [value]="employee.phone" disabled />
+            </div>
+            <!-- Email -->
+            <div>
+                <label class="label font-semibold">Email</label>
+                <input class="input input-bordered w-full text-lg" [value]="employee.email" disabled />
+            </div>
+        </div>
+    </div>
+
+    <!-- Bloque: Historial laboral -->
+    <div class="bg-base-200 p-6 rounded-lg shadow space-y-4">
+        <h2 class="text-xl font-bold">Historial Laboral</h2>
+        <div class="overflow-x-auto">
+            <table class="table table-zebra w-full">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Fecha de Inicio</th>
+                        <th>Fecha de Finalización</th>
+                        <th>Salario (Q)</th>
+                        <th>IGSS (%)</th>
+                        <th>IRTRA (%)</th>
+                        <th>Razon</th>
+                        <th>Descripcion</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (contract of contracts; track $index) {
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ contract.startDate }}</td>
+                        <td>{{ contract.endDate ? (contract.endDate) : 'Vigente' }}</td>
+                        <td>{{ contract.salary.toFixed(2) }}</td>
+                        <td>{{ contract.igssDiscount.toFixed(2) }}</td>
+                        <td>{{ contract.irtraDiscount.toFixed(2) }}</td>
+                        <td>{{ contract.terminationReason }}</td>
+                        <td>{{ contract.terminationDescription }}</td>
+                        <td>
+                            <span class="badge" [ngClass]="{
+                        'badge-success': !contract.endDate,
+                        'badge-neutral': contract.endDate
+                      }">
+                                {{ contract.endDate ? 'Finalizado' : 'Vigente' }}
+                            </span>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,186 @@
+@if (contract && employee) {
+<div class="p-6 space-y-4">
+    <!-- Botón de nuevo contrato -->
+    <div class="flex flex-col md:flex-row gap-4 justify-end">
+        <button data-cy="new-contract" class="btn-outline btn btn-accent" (click)="openNewContract()">Nuevo Contrato</button>
+        @if (!contract.terminationReason) {
+        <button class="btn-outline btn btn-secondary" (click)="openModalFisnish(false)">Finalizar Contrato</button>
+        }
+    </div>
+
+    <div class="border border-warning shadow-lg rounded-lg">
+        <!-- Sección: Datos del empleado -->
+        <div class="bg-base-200 p-6 rounded-lg shadow space-y-2">
+            <div class="flex justify-between items-center">
+                <h2 class="text-md font-bold">Datos del Empleado</h2>
+                <button class=" btn-outline btn btn-success" (click)="updateEmployeeArea()">Actualizar Información</button>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Nombre (bloqueado) -->
+                <div>
+                    <label class="label font-semibold">Nombre completo</label>
+                    <input class="input input-bordered w-full text-lg" [value]="employee.fullName" disabled />
+                </div>
+                <!-- CUI (bloqueado) -->
+                <div>
+                    <label class="label font-semibold">CUI</label>
+                    <input class="input input-bordered w-full  text-lg" [value]="employee.cui" disabled />
+                </div>
+                <!-- Teléfono -->
+                <div>
+                    <label class="label font-semibold">Teléfono</label>
+                    <input data-cy="phone-employee" class="input input-bordered w-full text-md" [(ngModel)]="employee.phone" />
+                </div>
+                <!-- Email -->
+                <div>
+                    <label class="label font-semibold">Email</label>
+                    <input class="input input-bordered w-full text-md" [(ngModel)]="employee.email" />
+                </div>
+                <!-- Área de trabajo -->
+                <div>
+                    <label class="label font-semibold">Área de trabajo</label>
+                    <select class="select select-bordered w-full text-md" [(ngModel)]="employee.areaName">
+                        @for (area of areas; track $index) {
+                        <option [value]="area.name">{{ area.name }}</option>
+                        }
+                    </select>
+                </div>
+
+                <div>
+                    <label class="label font-semibold">Fecha de registro</label>
+                    <input class="input input-bordered w-full text-md" [value]="this.formatDateTime(employee.createdAt)"
+                        disabled />
+                </div>
+
+                <div>
+                    <label class="label font-semibold">Ultima Actualizacion</label>
+                    <input class="input input-bordered w-full text-md" [value]="this.formatDateTime(employee.updatedAt)"
+                        disabled />
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Sección: Contrato actual (solo lectura) -->
+        @if (contract) {
+        <div class="bg-base-200 p-6 rounded-lg shadow space-y-2">
+            @if (!contract.terminationReason) {
+            <h2 class="text-md font-bold">Contrato Actual (Vigente)</h2>
+            }@else {
+            <h2 class="text-md font-bold text-red-300">Ultimo contrato (No Vigente)</h2>
+            }
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="label font-semibold">Fecha de inicio</label>
+                    <input class="input input-bordered w-full" [value]="contract.startDate" disabled />
+                </div>
+                <div>
+                    <label class="label font-semibold">Fecha de Finalizacion</label>
+                    <input class="input input-bordered w-full" [value]="contract.endDate" disabled />
+                </div>
+                <div>
+                    <label class="label font-semibold">Salario</label>
+                    <input class="input input-bordered w-full" [value]="'Q' + contract.salary" disabled />
+                </div>
+                <div>
+                    <label class="label font-semibold">Descuento IGSS</label>
+                    <input class="input input-bordered w-full" [value]="'%' + contract.irtraDiscount" disabled />
+                </div>
+                <div>
+                    <label class="label font-semibold">Descuento IRTRA</label>
+                    <input class="input input-bordered w-full" [value]="'%' + contract.igssDiscount" disabled />
+                </div>
+                @if (contract.terminationReason) {
+                <div>
+                    <label class="label font-semibold">Motivo de finalizacion</label>
+                    <input class="input input-bordered w-full" [value]="contract.terminationReason" disabled />
+                </div>
+
+                <div>
+                    <label class="label font-semibold">Descipcion</label>
+                    <input class="input input-bordered w-full" [value]="contract.terminationDescription" disabled />
+                </div>
+                }
+            </div>
+        </div>
+        }
+    </div>
+
+    <!-- Acciones -->
+    <div class="flex flex-col md:flex-row gap-4 justify-end mt-6">
+        @if (!contract.terminationReason) {
+        <button data-cy="increase-salary" class="btn-outline btn btn-info" (click)="openModalUpdateSalary(true)">Aumento Salarial</button>
+        <button data-cy="decrease-salary" class="btn-outline btn btn-warning" (click)="openModalUpdateSalary(false)">ReducciónSalarial</button>
+        <button data-cy="dismissal" class="btn-outline btn btn-error" (click)="openModalFisnish(true)">Despido</button> 
+        }
+
+    </div>
+</div>
+<!-- modal de nuevo contrato-->
+<dialog #modal class="modal">
+    <div class="modal-box">
+        <app-form-new-contract [idContrac]="contract.id" [idEmployee]="employee.id"></app-form-new-contract>
+        <!-- Botones alineados al final -->
+        <div class="modal-action">
+            <button class="btn-outline btn btn-accent" (click)="closeModal()">Cancelar</button>
+        </div>
+    </div>
+</dialog>
+
+<dialog #modal3 class="modal">
+    <div class="modal-box">
+        @if (isIncremente) {
+        <h3 class="font-bold text-lg">Aumento salarial</h3>
+
+        <p class="text-sm text-gray-500 mb-4">
+            Al aumentar el salario se creara un nuevo contrato, este contrato mandentra los descuentos anteriores.
+        </p>
+        }@else {
+        <h3 class="font-bold text-lg">Reduccion salarial</h3>
+
+        <p class="text-sm text-gray-500 mb-4">
+            Al reducir el salario se creara un nuevo contrato, este contrato mandentra los descuentos anteriores.
+        </p>
+        }
+
+        <p class="py-2">Ingrese el nuevo salario (Q)</p>
+        <input type="number" [(ngModel)]="newSalary" class="input input-bordered w-full" placeholder="Q" min="0" />
+
+        <div class="modal-action">
+            <button class="btn-outline btn btn-success" (click)="updateSalary()">Confirmar</button>
+            <button class="btn-outline btn-outlin btn btn-error" (click)="closeModalUpadteSalary()">Cancelar</button>
+        </div>
+
+    </div>
+</dialog>
+}
+
+<!-- modal de finalizacion de contrato-->
+<dialog #modal1 class="modal">
+    <div class="modal-box">
+
+        @if (isDimissal) {
+        <h3 class="font-bold text-lg">Despido de empleado</h3>
+
+        <p data-cy="dismissal-description" class="py-2">Ingrese la descripcion del despido</p>
+        }@else {
+        <h3 class="font-bold text-lg">Finalizacion de Contrato</h3>
+
+        <p class="py-2">Ingrese la descripcion de la finalizacion</p>
+        }
+
+        <input data-cy="finish-contract-description" type="text" [(ngModel)]="description" class="input input-bordered w-full" placeholder="fin contrato.." />
+
+        <div class="modal-action">
+            <button data-cy="finish-contract" class="btn-outline btn btn-success" (click)="finishContract()">Confirmar</button>
+            <button class="btn-outline btn-outlin btn btn-error" (click)="closeModalFinish()">Cancelar</button>
+        </div>
+
+    </div>
+</dialog>
+
+
+<!-- Modal  respuesta-->
+<dialog #modal2 id="my_modal_1" class="modal">
+    <app-modal-msg [content]="contentModal" [title]="titleModal" [className]="calssValue"></app-modal-msg>
+</dialog>

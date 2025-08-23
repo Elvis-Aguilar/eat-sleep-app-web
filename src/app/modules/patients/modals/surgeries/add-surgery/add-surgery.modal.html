@@ -1,0 +1,70 @@
+<div class="text-center mb-2">
+  <h1 class="text-3xl font-bold text-primary">Agendar Cirugía</h1>
+</div>
+
+<form [formGroup]="addForm" class="space-y-4" autocomplete="off">
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Descripción</span>
+      <span class="text-xs text-error">*</span>
+    </legend>
+    <input
+      type="text"
+      formControlName="description"
+      name="description"
+      class="input input-bordered w-full"
+      [required]="true"
+      [class.input-error]="addForm.get('description')?.touched && addForm.get('description')?.invalid"
+      [class.input-success]="addForm.get('description')?.touched && addForm.get('description')?.valid"
+    />
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Fecha de ingreso</span>
+      <span class="text-xs text-error">*</span>
+    </legend>
+    <input
+      type="date"
+      formControlName="performedDate"
+      name="performedDate"
+      class="input input-bordered w-full"
+      [required]="true"
+      [class.input-error]="addForm.get('performedDate')?.touched && addForm.get('performedDate')?.invalid"
+      [class.input-success]="addForm.get('performedDate')?.touched && addForm.get('performedDate')?.valid"
+    />
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Tarifa</span>
+      <span class="text-xs text-error">*</span>
+    </legend>
+    <select
+      formControlName="tariffId"
+      name="tariffId"
+      class="select select-bordered w-full"
+      required="true"
+      [class.select-error]="addForm.get('tariffId')?.touched && addForm.get('tariffId')?.invalid"
+      [class.select-success]="addForm.get('tariffId')?.touched && addForm.get('tariffId')?.valid"
+    >
+      <option disabled selected value="0">Seleccionar tarifa</option>
+      @for (tariff of tariffs; track tariff.id) {
+      <option [ngValue]="tariff.id">{{ tariff.description }}</option>
+      }
+    </select>
+  </fieldset>
+
+  <div class="flex justify-evenly mb-2">
+    <button
+      class="btn transition-all duration-300 ease-in-out"
+      [class.btn-primary]="!creating"
+      [class.btn-disabled]="creating || this.addForm.invalid"
+      (click)="addSurgery()"
+    >
+      @if (creating) {
+      <span class="loading loading-dots loading-xs"></span>
+      } @else { Agregar Cirugía }
+    </button>
+  </div>
+</form>

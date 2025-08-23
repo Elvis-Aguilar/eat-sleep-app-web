@@ -1,0 +1,46 @@
+<div class="text-center mb-2">
+  <h1 class="text-3xl font-bold text-primary">Editar Cirugía</h1>
+</div>
+
+<form [formGroup]="editForm" class="space-y-4" autocomplete="off">
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Descripción</span>
+    </legend>
+    <input
+      type="text"
+      formControlName="description"
+      name="description"
+      class="input input-bordered w-full"
+      [class.input-error]="editForm.get('description')?.touched && editForm.get('description')?.invalid"
+      [class.input-success]="editForm.get('description')?.touched && editForm.get('description')?.valid"
+    />
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Fecha de ingreso</span>
+    </legend>
+    <input
+      type="date"
+      formControlName="performedDate"
+      name="performedDate"
+      class="input input-bordered w-full"
+      [class.input-error]="editForm.get('performedDate')?.touched && editForm.get('performedDate')?.invalid"
+      [class.input-success]="editForm.get('performedDate')?.touched && editForm.get('performedDate')?.valid"
+    />
+  </fieldset>
+
+  <div class="flex justify-evenly mb-2">
+    <button
+      class="btn transition-all duration-300 ease-in-out"
+      [class.btn-primary]="!updating"
+      [class.btn-disabled]="updating || this.editForm.invalid"
+      (click)="editSurgery()"
+    >
+      @if (updating) {
+      <span class="loading loading-dots loading-xs"></span>
+      } @else { Editar Cirugía }
+    </button>
+  </div>
+</form>

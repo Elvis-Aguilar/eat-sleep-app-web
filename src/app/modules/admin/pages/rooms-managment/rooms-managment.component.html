@@ -1,0 +1,101 @@
+<h1 class="text-2xl font-bold text-center">Gestion de Áreas de trabajo</h1>
+<div class="p-6 max-w-6xl mx-auto">
+    <!-- Botón para nueva área -->
+    <div class="flex justify-end mb-4">
+        <button class="btn-outline btn-primary btn btn-sl" (click)="openCreateArea()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Registrar Nueva Área
+        </button>
+    </div>
+
+    <!-- Tabla de áreas -->
+    <div class="overflow-x-auto">
+        <table class="table table-zebra w-full">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Numero</th>
+                    <th>Costo por dia</th>
+                    <th>Ocupado</th>
+                    <th>Mantenimiento</th>
+                    <th>Fecha de Creación</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (room of rooms; track $index) {
+                <tr>
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ room.number }}</td>
+                    <td>{{ room.costPerDay }}</td>
+                    <td>
+                        <span class="badge" [ngClass]="{
+                        'badge-success': !room.isOccupied,
+                        'badge-neutral': room.isOccupied
+                      }">
+                            {{room.isOccupied ? 'Si' : 'No' }}
+
+                        </span>
+
+
+
+                    </td>
+                    <td>
+                        <span class="badge" [ngClass]="{
+                            'badge-success': !room.underMaintenance,
+                            'badge-neutral': room.underMaintenance
+                          }">
+                            {{ room.underMaintenance? 'Si' : 'No' }}
+
+                        </span>
+                    </td>
+                    <td>{{ formatDateTime(room.createdAt) }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-info" (click)="openEditModal(room)">Editar</button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- Modal de Recarga -->
+<dialog #modal class="modal">
+    <div class="modal-box">
+        @if (isEditModalOpen) {
+        <h3 class="font-bold text-lg">Editar Habitacion </h3>
+        }@else {
+        <h3 class="font-bold text-lg">Crear una nueva Habitacion </h3>
+        }
+        <p class="py-2">Ingrese el Numero de la habitacion:</p>
+
+        <input type="text" [(ngModel)]="numberRoom" class="input input-bordered w-full"
+            placeholder="numero de numero A5" />
+
+        <p class="py-2">Ingrese el costo por dia de la habitacion:</p>
+
+        <input type="number" [(ngModel)]="costPerDay" class="input input-bordered w-full"
+            placeholder="numero de numero A5" min="0" />
+
+        <div class="modal-action">
+            @if (isEditModalOpen) {
+            <button class="btn btn-success" (click)="updateArea()">Actualizar</button>
+            }@else {
+            <button class="btn btn-success" (click)="createArea()">Registrar</button>
+            }
+
+            <button class="btn btn-error" (click)="closeModal()">Cancelar</button>
+        </div>
+    </div>
+</dialog>
+
+
+<!-- Modal  respuesta-->
+<dialog #modal1 id="my_modal_1" class="modal">
+    <app-modal-msg [content]="contentModal" [title]="titleModal" [className]="calssValue"></app-modal-msg>
+</dialog>

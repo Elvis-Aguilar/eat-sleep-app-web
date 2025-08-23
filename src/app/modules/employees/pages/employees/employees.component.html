@@ -1,0 +1,85 @@
+<h1 class="text-xl font-bold text-center mb-6">Area de gestion de Emplados</h1>
+
+<!-- Filtros -->
+<div class="bg-base-100 shadow-xl rounded-xl p-4 mb-2 border border-success">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-3">
+
+        <!-- Filtro  -->
+        <div>
+            <label class="label">
+                <span class="label-text">Filtrar por Areas</span>
+            </label>
+            <select class="select select-bordered w-full btn btn-xs" [(ngModel)]="idArea">
+                <option value=0>Todos</option>
+                @for (item of areas; track $index) {
+                <option value={{item.id}}>{{item.name}}</option>
+                }
+            </select>
+        </div>
+
+        <div>
+            <label class="label">
+                <span class="label-text">Filtrar por Orden</span>
+            </label>
+            <select class="select select-bordered w-full btn btn-xs">
+                <option value="views">Ascendente</option>
+                <option value="ads">Descendente</option>
+            </select>
+        </div>
+
+        <div>
+            <button class="btn-primary btn btn-xs mt-6" (click)="filter()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                </svg>
+                Filtrar
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<!-- tabla -->
+<div class="overflow-x-auto bg-base-100 p-4 shadow-lg rounded-lg border border-warning mb-2">
+    <table class="table table-zebra w-full border border-base-300">
+        <!-- Encabezado -->
+        <thead class="bg-base-200">
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>CUI</th>
+                <th>Area de trabajo</th>
+                <th>Es especialista</th>
+                <th>Historial Laboral</th>
+                <th>Gestionar</th>
+            </tr>
+        </thead>
+        <!-- Cuerpo -->
+        <tbody>
+            @for (emp of employees; track $index) {
+            <tr>
+                <td>{{$index+1}}</td>
+                <td>{{emp.fullName}}</td>
+                <td>{{emp.cui}}</td>
+                <td>{{emp.areaName}}</td>
+                @if (emp.isSpecialist) {
+                <td>SI</td>
+                <td>--</td>
+                <td>--</td>
+                }@else {
+                <td>NO</td>
+                <td class="space-x-2">
+                    <button class="btn-outline btn btn-sm btn-accent btn-block" (click)="goHistory(emp)">Ir</button> 
+                </td>
+                <td class="space-x-2">
+                    <button data-cy="go-employee" class="btn-outline btn btn-sm btn-secondary btn-block" (click)="goManagmentEmployee(emp)">Ir</button>
+                </td>
+                }
+            </tr>
+            }
+        </tbody>
+
+    </table>
+</div>

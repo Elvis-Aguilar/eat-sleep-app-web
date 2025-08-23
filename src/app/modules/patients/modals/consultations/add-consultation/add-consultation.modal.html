@@ -1,0 +1,36 @@
+<div class="text-center mb-2">
+  <h1 class="text-3xl font-bold text-primary">Nueva Consulta</h1>
+</div>
+
+<form [formGroup]="addForm" class="space-y-4" autocomplete="off">
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Concepto</span>
+      <span class="text-xs text-error">*</span>
+    </legend>
+    <input
+      data-cy="concept-consultation"
+      type="text"
+      formControlName="concept"
+      name="concept"
+      class="input input-bordered w-full"
+      [required]="true"
+      [class.input-error]="addForm.get('concept')?.touched && addForm.get('concept')?.invalid"
+      [class.input-success]="addForm.get('concept')?.touched && addForm.get('concept')?.valid"
+    />
+  </fieldset>
+
+  <div class="flex justify-evenly mb-2">
+    <button
+      data-cy="add-consultation"
+      class="btn transition-all duration-300 ease-in-out"
+      [class.btn-primary]="!creating"
+      [class.btn-disabled]="creating || this.addForm.invalid"
+      (click)="addConsultation()"
+    >
+      @if (creating) {
+      <span class="loading loading-dots loading-xs"></span>
+      } @else { Registrar Consulta }
+    </button>
+  </div>
+</form>

@@ -1,0 +1,12 @@
+<main class="relative min-w-fit max-w-full mx-4 py-4">
+  <h1 class="text-3xl font-bold mb-4 text-center text-primary">
+    Detalles del Paciente '{{ patient?.fullName || 'Cargando...' }}'
+  </h1>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8">
+    <patient-details-admissions />
+    <patient-details-bills />
+    <patient-details-surgeries />
+    <patient-details-consultations />
+  </div>
+</main>

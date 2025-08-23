@@ -1,0 +1,22 @@
+.menu li {
+    transition: all 0.2s ease-in-out;
+}
+
+.menu li a {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    font-size: 14px;
+    gap: 12px;
+    border-radius: 8px;
+}
+
+.menu li.active a {
+    background-color: var(--color-primary);
+    color: var(--primary-content);
+}
+
+.menu li:hover:not(.active) a {
+    background-color: var(--color-base-300);
+    color: var(--base-content);
+}

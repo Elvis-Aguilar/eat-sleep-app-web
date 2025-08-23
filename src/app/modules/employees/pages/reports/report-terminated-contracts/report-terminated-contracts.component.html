@@ -1,0 +1,100 @@
+<h1 class="text-xl font-bold text-center mb-6">Reporte de Empleados Retirados (Despedidos, renuncias, fin contrato)</h1>
+
+<!-- Filtros -->
+<div class="bg-base-100 shadow-xl rounded-xl p-4 mb-2 border border-primary">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-3">
+
+        <!-- Filtro  -->
+        <div>
+            <label class="label">
+                <span class="label-text">Filtrar por Areas</span>
+            </label>
+            <select class="select select-bordered w-full btn btn-xs" [(ngModel)]="idArea">
+                <option value=0>Todos</option>
+                @for (item of areas; track $index) {
+                <option value={{item.id}}>{{item.name}}</option>
+                }
+            </select>
+        </div>
+
+        <div>
+            <label class="label font-semibold">Desde:</label>
+            <input type="date" class="input input-bordered w-full btn btn-sm" [(ngModel)]="startDate" />
+        </div>
+        <div>
+            <label class="label font-semibold">Hasta:</label>
+            <input type="date" class="input input-bordered w-full btn btn-sm" [(ngModel)]="endDate" />
+        </div>
+
+        <div>
+            <button class="btn btn-outline btn-primary mt-4" (click)="filter()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                Generar Reporte
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- tabla -->
+<div class="overflow-x-auto bg-base-100 p-4 shadow-lg rounded-lg border border-secondary mb-2">
+    <div class="overflow-x-auto">
+        <table class="table table-zebra w-full">
+            @for (repo of report; track $index) {
+            <thead>
+                <tr>
+                    <th colspan="3">Nombre</th>
+                    <th colspan="2">Cui</th>
+                    <th colspan="2">Email</th>
+                    <th colspan="2">Area trabajo</th>
+                </tr>
+                <tr class="text-purple-400">
+                    <th colspan="3"><strong>{{repo.fullName}}</strong> </th>
+                    <th colspan="2"><strong>{{repo.cui}}</strong> </th>
+                    <th colspan="2"><strong>{{repo.email}}</strong> </th>
+                    <th colspan="2"><strong>{{repo.areaName}}</strong> </th>
+                </tr>
+                <th colspan="9" class="text-center text-md font-bold bg-base-200">
+                    Detalle de Contratos
+                </th>
+                <tr>
+                    <th>#</th>
+                    <th>Fecha de Inicio</th>
+                    <th>Fecha de Finalización</th>
+                    <th>Salario (Q)</th>
+                    <th>IGSS (%)</th>
+                    <th>IRTRA (%)</th>
+                    <th>Razon</th>
+                    <th>Descripcion</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (contract of repo.contracts; track $index) {
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ contract.startDate }}</td>
+                    <td>{{ contract.endDate ? (contract.endDate) : 'Vigente' }}</td>
+                    <td>{{ contract.salary.toFixed(2) }}</td>
+                    <td>{{ contract.igssDiscount.toFixed(2) }}</td>
+                    <td>{{ contract.irtraDiscount.toFixed(2) }}</td>
+                    <td>{{ contract.terminationReason }}</td>
+                    <td>{{ contract.terminationDescription }}</td>
+                    <td>
+                        <span class="badge" [ngClass]="{
+                        'badge-success': !contract.endDate,
+                        'badge-neutral': contract.endDate
+                      }">
+                            {{ contract.endDate ? 'Finalizado' : 'Vigente' }}
+                        </span>
+                    </td>
+                </tr>
+                }
+            </tbody>
+            }
+        </table>
+
+    </div>
+</div>

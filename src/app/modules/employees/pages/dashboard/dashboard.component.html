@@ -1,0 +1,90 @@
+<h1 class="text-xl font-bold text-center mb-6">Bienvenido al Dashboard</h1>
+
+
+<!-- tajets -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 mb-6">
+  <div class="bg-neutral-content	rounded-xl shadow-lg p-3 text-center">
+    <!-- total de empleados -->
+    <app-tarjet [type]="'total_empleados'" [title]="'Total de empleados'" [value]="'15'" [label]="'total de empleados registrados'"></app-tarjet>
+  </div>
+  <div class="bg-neutral-content rounded-xl shadow-lg p-3 text-center">
+    <!-- empleados con mas ventas -->
+    <app-tarjet [type]="'total_empleados'" [title]="'Empleado'" [value]="'Juan Tzul'" [label]="'empleado con mas ventas de medicamentos'"></app-tarjet>
+  </div>
+  <div class="bg-neutral-content rounded-xl shadow-lg p-3 text-center">
+    <!-- VAcaciones -->
+    <app-tarjet [type]="'total_empleados'" [title]="'Vacaciones'" [value]="'15 dias'" [label]="'Dias de vacaciones'"></app-tarjet>
+  </div>
+  <div class="bg-neutral-content rounded-xl shadow-lg p-3 text-center">
+    <!-- descuentos por igs y irtra -->
+    <app-tarjet [type]="'total_empleados'" [title]="'Descuentos'" [title]="'Descuentos'" [value]="'20%'" [label]="'Los descuentos no pueden exceder'"></app-tarjet>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-6 max-w-7xl mx-auto">
+  <!-- Card: Registrar Empleado -->
+  <div class="card bg-base-100 shadow-xl border border-gray-200">
+    <div class="card-body">
+      <h2 class="card-title text-primary">Registrar Empleado</h2>
+      <p>Agrega un nuevo empleado al sistema o inicia un nuevo contrato para uno existente.</p>
+      <div class="card-actions justify-end">
+        <button data-cy="register-employee" class="btn btn-primary" (click)="goRegister()">Ir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card: Gestión de Vacaciones -->
+  <div class="card bg-base-100 shadow-xl border border-gray-200">
+    <div class="card-body">
+      <h2 class="card-title text-secondary">Gestión de Vacaciones</h2>
+      <p>Aprueba o rechaza solicitudes de vacaciones realizadas por el personal.</p>
+      <div class="card-actions justify-end">
+        <button data-cy="go-vacations" class="btn btn-secondary" (click)="goVacations()">Ir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card: Gestión de Áreas -->
+  <div class="card bg-base-100 shadow-xl border border-gray-200">
+    <div class="card-body">
+      <h2 class="card-title text-accent">Gestión de Áreas</h2>
+      <p>Crea y edita las áreas de trabajo dentro del hospital.</p>
+      <div class="card-actions justify-end">
+        <button class="btn btn-accent" (click)="goAreas()">Ir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card: Gestión de Empleados -->
+  <div class="card bg-base-100 shadow-xl border border-gray-200">
+    <div class="card-body">
+      <h2 class="card-title text-info">Gestión de Empleados</h2>
+      <p>Administra la historia laboral, contratos, salarios y despidos del personal.</p>
+      <div class="card-actions justify-end">
+        <button data-cy="go-gestion" class="btn btn-info" (click)="goGestion()">Ir</button>
+      </div>
+    </div>
+  </div>
+
+    <!-- Card: Gestión de pagos a medicos espcialistas -->
+    <div class="card bg-base-100 shadow-xl border border-gray-200">
+      <div class="card-body">
+        <h2 class="card-title text-accent">Gestión de Pagos a especialistas</h2>
+        <p>Gestion de los pagos a medicos especialistas.</p>
+        <div class="card-actions justify-end">
+          <button class="btn btn-info" (click)="goToPayment()">Ir</button>
+        </div>
+      </div>
+    </div>
+
+  <!-- Card: Reportes -->
+  <div class="card bg-base-100 shadow-xl border border-gray-200">
+    <div class="card-body">
+      <h2 class="card-title text-warning">Reportes</h2>
+      <p>Genera reportes detallados sobre la gestión del personal y sus actividades.</p>
+      <div class="card-actions justify-end">
+        <button class="btn btn-warning"(click)="goReports()">Ir</button>
+      </div>
+    </div>
+  </div>
+</div>

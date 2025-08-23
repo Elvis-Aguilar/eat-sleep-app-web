@@ -1,0 +1,74 @@
+<div class="text-center mb-2">
+  <h1 class="text-3xl font-bold text-primary">Editar revista</h1>
+</div>
+
+<form [formGroup]="editForm" class="space-y-4">
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Nombre completo</span>
+    </legend>
+    <input
+      type="text"
+      formControlName="fullName"
+      name="fullName"
+      class="input input-bordered w-full"
+      [class.input-error]="editForm.get('fullName')?.touched && editForm.get('fullName')?.invalid"
+      [class.input-success]="editForm.get('fullName')?.touched && editForm.get('fullName')?.valid"
+    />
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Fecha de nacimiento</span>
+    </legend>
+    <input
+      type="date"
+      formControlName="birthDate"
+      name="birthDate"
+      class="input input-bordered w-full"
+      [class.input-error]="editForm.get('birthDate')?.touched && editForm.get('birthDate')?.invalid"
+      [class.input-success]="editForm.get('birthDate')?.touched && editForm.get('birthDate')?.valid"
+    />
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Teléfono</span>
+    </legend>
+    <input
+      type="text"
+      formControlName="phone"
+      name="phone"
+      class="input input-bordered w-full"
+      [class.input-error]="editForm.get('phone')?.touched && editForm.get('phone')?.invalid"
+      [class.input-success]="editForm.get('phone')?.touched && editForm.get('phone')?.valid"
+    />
+  </fieldset>
+
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">
+      <span>Email</span>
+    </legend>
+    <input
+      type="text"
+      formControlName="email"
+      name="email"
+      class="input input-bordered w-full"
+      [class.input-error]="editForm.get('email')?.touched && editForm.get('email')?.invalid"
+      [class.input-success]="editForm.get('email')?.touched && editForm.get('email')?.valid"
+    />
+  </fieldset>
+
+  <div class="flex justify-evenly mb-2">
+    <button
+      class="btn transition-all duration-300 ease-in-out"
+      [class.btn-primary]="!updating"
+      [class.btn-disabled]="updating || this.editForm.invalid"
+      (click)="editPatient()"
+    >
+      @if (updating) {
+      <span class="loading loading-dots loading-xs"></span>
+      } @else { Editar Revista }
+    </button>
+  </div>
+</form>

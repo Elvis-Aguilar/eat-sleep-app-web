@@ -1,0 +1,16 @@
+<div class="flex size-screen ml-[60px] mt-[56px]">
+  <!-- Sidebar -->
+  <patients-sidebar class="flex-none w-[60px] h-screen bg-base-100 fixed top-0 left-0 z-500" />
+
+  <div class="flex flex-col w-full">
+    <!-- Navbar -->
+    <patients-navbar class="w-[calc(100vw-60px)] bg-base-100 border-b-1 fixed top-0 right-0 z-500" />
+
+    <!-- Contenido dinámico (Lazy Loaded) -->
+    <div class="flex-1 px-2">
+      <main class="mt-6 min-w-fit">
+        <router-outlet />
+      </main>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<h1 class="text-xl font-bold text-center mb-6">Área de Reportes</h1>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <!-- Reporte de hisotrial de contratos -->
+    <div class="card bg-base-100 shadow-xl rounded-xl border border-accent">
+        <div class="card-body">
+            <h2 class="card-title text-secondary">Reporte de Empleados contratado</h2>
+            <p>Consulta los empleados contratados, historial laboral, incluyendo salario e informacion del contrato por
+                empleado.
+                Filtra por area y periodo de tiempo
+            </p>
+            <div class="card-actions justify-end">
+                <button class="btn btn-sm btn-primary" (click)="goHistoryContract()">Ver Reporte</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reporte de empleados retirados -->
+    <div class="card bg-base-100 shadow-xl rounded-xl border border-secondary">
+        <div class="card-body">
+            <h2 class="card-title text-primary">Reporte de Empleados retirados</h2>
+            <p>Consulta los empleados retirados por fin de contrato, despidos. Filtra por area y periodo de tiempo </p>
+            <div class="card-actions justify-end">
+                <button class="btn btn-sm btn-primary" (click)="goReportsRetiredemployees()">Ver Reporte</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reporte de medicos -->
+    <div class="card bg-base-100 shadow-xl rounded-xl border border-primary">
+        <div class="card-body">
+            <h2 class="card-title text-accent">Reporte de Medicos</h2>
+            <p>Consulta la actividad de los medicos, salarios, nombres, filtra por medicos con asigancion de pacientes
+                o que no tienen ningun asignacion.</p>
+            <div class="card-actions justify-end">
+                <button class="btn btn-sm btn-primary" (click)="goRepostDoctors()">Ver Reporte</button>
+            </div>
+        </div>
+    </div>
+
+</div>

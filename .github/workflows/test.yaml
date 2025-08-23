@@ -1,0 +1,56 @@
+name: Test
+
+on:
+  pull_request:
+    branches:
+      - main
+      - development
+
+jobs:
+  test:
+    name: Angular Test
+    runs-on: ubuntu-latest
+    steps:
+      # BEGIN - Enviroment setup
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        with:
+          chrome-version: stable
+          install-dependencies: true
+
+      - name: Setup Chrome bin
+        run: |
+          echo "CHROME_BIN=${{ steps.setup-chrome.outputs.chrome-path }}" >> $GITHUB_ENV
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      # END - Enviroment setup
+
+      # BEGIN - npm test tasks
+      # - name: Test with Karma
+      #   run: npm run test:ci
+
+      # - name: Test coverage with Karma
+      #   run: npm run test:coverage
+
+      # - name: Upload test coverage results
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: coverage-results
+      #     path: ${{ github.workspace }}/coverage/revistland/index.html
+      #     overwrite: true
+      #     retention-days: 7
+
+      # END - npm test tasks

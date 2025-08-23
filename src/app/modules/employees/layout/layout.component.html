@@ -1,0 +1,17 @@
+<div class="flex size-screen ml-[60px] mt-[56px]">
+  <!-- Navbar -->
+  <app-nav-bar class="w-[calc(100vw-60px)] bg-base-100 border-b-1 fixed top-0 right-0 z-500" />
+
+  <div class="flex flex-1 overflow-hidden">
+
+    <!-- Sidebar -->
+    <app-side-bar class="flex-none w-[60px] h-screen bg-base-100 fixed top-0 left-0 z-500 " />
+
+    <!-- Contenido dinámico (Lazy Loaded) -->
+    <div class="flex-1 p-4 overflow-auto">
+      <main class="flex-1 p-4 max-w-7xl mx-auto">
+        <router-outlet />
+      </main>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<h1 class="text-2xl font-bold text-center">Gestion de Áreas de trabajo</h1>
+<div class="p-6 max-w-6xl mx-auto">
+    <!-- Botón para nueva área -->
+    <div class="flex justify-end mb-4">
+        <button data-cy="new-area" class="btn-outline btn-primary btn btn-sl" (click)="openCreateArea()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Registrar Nueva Área
+        </button>
+    </div>
+
+    <!-- Tabla de áreas -->
+    <div class="overflow-x-auto">
+        <table class="table table-zebra w-full">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Fecha de Creación</th>
+                    <th>Última Modificación</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (area of areas; track $index) {
+                <tr>
+                    <td>{{ area.name }}</td>
+                    <td>{{ area.createdAt}}</td>
+                    <td>{{ area.updatedAt}}</td>
+                    <td>
+                        <button class="btn btn-sm btn-info" (click)="openEditModal(area)">Editar</button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<!-- Modal de Recarga -->
+<dialog #modal class="modal">
+    <div class="modal-box">
+        @if (isEditModalOpen) {
+        <h3 class="font-bold text-lg">Editar Area de trabajo</h3>
+        }@else {
+        <h3 class="font-bold text-lg">Crear nuevo area de trabajo</h3>
+        }
+        <p class="py-2">Ingrese el nuevo nombre del area:</p>
+
+        <input type="text" [(ngModel)]="nameArea" data-cy="name-area" class="input input-bordered w-full"
+            placeholder="Nueva Area" />
+
+        <div class="modal-action">
+            @if (isEditModalOpen) {
+            <button data-cy="update-area" class="btn btn-success" (click)="updateArea()">Actualizar</button>
+            }@else {
+            <button data-cy="create-area" class="btn btn-success" (click)="createArea()">Registrar</button>
+            }
+
+            <button class="btn btn-error" (click)="closeModal()">Cancelar</button>
+        </div>
+    </div>
+</dialog>
+
+
+<!-- Modal  respuesta-->
+<dialog #modal1 id="my_modal_1" class="modal">
+    <app-modal-msg [content]="contentModal" [title]="titleModal" [className]="calssValue"></app-modal-msg>
+</dialog>

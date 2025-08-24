@@ -9,19 +9,15 @@ export const authGuard: CanActivateFn = (route, state) => {
     if (store.session?.token()) {
         if (route.data['role'] && store.session.roleName() !== route.data['role']) {
             switch (store.session.roleName()) {
-                case 'Encargado de Farmacia':
+                case 'GERENTE':
                   router.navigate(['/pharmacy'])
                   break;
           
-                case 'Encargado de Empleados':
+                case 'CAJERO':
                   router.navigate(['/employee-management'])
                   break;
-                case 'Encargado de Pacientes':
+                case 'RECEPCIONISTA':
                   router.navigate(['/patients'])
-                  break;
-          
-                case 'Administrador':
-                  router.navigate(['/admin'])
                   break;
           
                 default:

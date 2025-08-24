@@ -1,3 +1,3 @@
 export const environment = {
-    API_ROOT: 'https://frontdoor-884885805949.us-central1.run.app/api'
+    API_ROOT: 'http://localhost:8080/api'
 };

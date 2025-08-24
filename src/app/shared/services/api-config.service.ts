@@ -7,7 +7,7 @@ import { environment } from "@environment/environment";
 export class ApiConfigService {
 
     private readonly API_BASE = environment.API_ROOT;
-    private readonly API_BASE_AUTH = `${this.API_BASE}/gatekeeper/v1`
+    private readonly API_BASE_AUTH = `${this.API_BASE}/auth-identity/v1`
     private readonly API_BASE_EMPLOYEE = `${this.API_BASE}/hr/v1`
     private readonly API_BASE_PHARMACY = `${this.API_BASE}/rx/v1`
     private readonly API_BASE_WARD = `${this.API_BASE}/ward/v1`

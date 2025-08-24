@@ -19,7 +19,7 @@ export class AuthService {
     }
 
     register(register: Register): Observable<Register> {
-        return this.http.post<Register>(`${this.apiConfigService.API_AUTH}/sign-up`, register);
+        return this.http.post<Register>(`${this.apiConfigService.API_AUTH}/employee/sign-up`, register);
     }
 
     confirmation(confirmation: Confirmation): Observable<Session> {

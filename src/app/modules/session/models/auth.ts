@@ -29,8 +29,7 @@ export interface Session {
 }
 
 export enum Rol {
-    PHARMACY = "Encargado de Farmacia",
-    EMPLOYEE = "Encargado de Empleados",
-    PATIENT = "Encargado de Pacientes",
-    ADMIN = "Administrador"
+    GERENTE = "GERENTE",
+    CAJERO = "CAJERO",
+    RECEPCIONISTA = "RECEPCIONISTA",
 }

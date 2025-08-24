@@ -12,7 +12,7 @@ export const INITIAL_STATE: Auth = {
         email: "",
         cui:"",
         active:false,
-        roleName: Rol.PATIENT,
+        roleName: Rol.GERENTE,
     }
 };
 

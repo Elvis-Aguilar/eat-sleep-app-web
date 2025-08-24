@@ -24,7 +24,7 @@ export default class ConfirmationComponent {
 
   classSucces = 'text-purple-700 text-lg'
   titleModal = 'Confrimacion Exitosa'
-  contentModal = 'El administrador debera a aprobar su cuenta para que pueda acceder al sistema'
+  contentModal = 'Puede realizar las opciones permitidas en su cuenta'
 
 
   errorMessage: string = '';
@@ -70,22 +70,19 @@ export default class ConfirmationComponent {
     })
   }
 
+
   redirect(role: string) {
     switch (role) {
-      case 'Encargado de Farmacia':
+      case 'CAJERO':
         this.router.navigate(['/pharmacy'])
         break;
 
-      case 'Encargado de Empleados':
+      case 'RECEPCIONISTA':
         this.router.navigate(['/employee-management'])
         break;
 
-      case 'Encargado de Pacientes':
-        this.router.navigate(['/patient-management'])
-        break;
-
-      case 'Administrador':
-        this.router.navigate(['/admin'])
+      case 'GERENTE':
+        this.router.navigate(['/manager'])
         break;
 
       default:

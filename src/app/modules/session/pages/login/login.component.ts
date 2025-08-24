@@ -40,9 +40,7 @@ export default class LoginComponent {
     const login: Login = this.loginForm.getRawValue();
 
     this.authService.login(login).subscribe({
-      next: (value: Session) => {
-        console.log(value);
-        
+      next: (value: Session) => {        
         this.store.updateSession(value)
         this.redirect(value.roleName)
       },
@@ -76,11 +74,11 @@ export default class LoginComponent {
   redirect(role: string) {
     switch (role) {
       case 'CAJERO':
-        this.router.navigate(['/pharmacy'])
+        this.router.navigate(['/restaurant'])
         break;
 
       case 'RECEPCIONISTA':
-        this.router.navigate(['/employee-management'])
+        this.router.navigate(['/hotel'])
         break;
 
       case 'GERENTE':

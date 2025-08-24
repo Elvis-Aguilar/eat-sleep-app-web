@@ -8,6 +8,10 @@ export const routes: Routes = [
         pathMatch: 'full'
     },
     {
+        path: "session",
+        loadChildren: () => import('./modules/session/auth.routes').then(m => m.routes)
+    },
+    {
         path: 'manager',
         canActivate: [authGuard],
         data: {
@@ -15,25 +19,20 @@ export const routes: Routes = [
         },
         loadChildren: () => import('./modules/MANAGER/manager.routes').then(m => m.MANAGER_ROUTES),
     },
-
-    {
-        path: "session",
-        loadChildren: () => import('./modules/session/auth.routes').then(m => m.routes)
-    },
     {
         path: 'restaurant',
         canActivate: [authGuard],
         data: {
             role: 'CAJERO'
         },
-        loadChildren: () => import('./modules/employees/employees.routes').then(m => m.EMPLOYEES_ROUTES),
+        loadChildren: () => import('./modules/RESTAURANT/restaurant.routes').then(m => m.RESTAURANT_ROUTES),
     },
     {
-        path: 'Hotel',
+        path: 'hotel',
         canActivate: [authGuard],
         data: {
             role: 'RECEPCIONISTA'
         },
-        loadChildren: () => import('@patients/patients.routes').then((m) => m.routes),
+        loadChildren: () => import('./modules/HOTEL/hotel.routes').then((m) => m.HOTEL_ROUTES),
     },
 ];

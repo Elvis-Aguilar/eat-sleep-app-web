@@ -45,8 +45,6 @@ export default class ConfirmationComponent {
 
   confirm() {
     this.errorMessage = '';
-    console.log(this.confirmationForm.value);
-
 
     if (this.confirmationForm.invalid) {
       this.errorMessage = 'Por favor, ingrese el codigo de confirmación';
@@ -61,7 +59,8 @@ export default class ConfirmationComponent {
 
         this.modalRef2.nativeElement.addEventListener('close', () => {
 
-          this.redirect('/session/login')
+          this.store.updateSession(response)
+          this.redirect(response.roleName)
         }, { once: true });
       },
       error: (error) => {
@@ -74,11 +73,11 @@ export default class ConfirmationComponent {
   redirect(role: string) {
     switch (role) {
       case 'CAJERO':
-        this.router.navigate(['/pharmacy'])
+        this.router.navigate(['/restaurant'])
         break;
 
       case 'RECEPCIONISTA':
-        this.router.navigate(['/employee-management'])
+        this.router.navigate(['/hotel'])
         break;
 
       case 'GERENTE':

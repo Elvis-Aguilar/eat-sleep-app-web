@@ -15,16 +15,23 @@ export class DashboardManagerComponent {
 
   }
 
-  goUsers() {
-    this.route.navigate(['admin/management-users'])
+  goEmployees() {
+    this.route.navigate(['manager/employees'])
   }
 
-  goRooms() {
-    this.route.navigate(['admin/rooms'])
+  goHotels() {
+    this.route.navigate(['manager/hotels'])
   }
 
+  goRestaurants() {
+    this.route.navigate(['manager/restaurants'])
+  }
+
+  goPromotions() {
+    this.route.navigate(['manager/promotions'])
+  }
 
   goReports() {
-    this.route.navigate(['admin/reports'])
+    this.route.navigate(['manager/reports'])
   }
 }

@@ -28,6 +28,7 @@ export class SideBarManagerComponent {
   readonly Reports = ChartPie;
   readonly Settings = Settings;
   readonly AdminShield = Shield;
+  readonly FileText = FileText;
 
   isCollapsed = true;
 

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { LocalStorageService } from '@shared/services/local-storage.service';
 
 const excludedUrls: string[] = [
-    '/auth'
+    '/auth-identity/v1/auth',
 ]
 
 export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
@@ -16,8 +16,9 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
     }
 
     let session = localStorageService.getState().session;
+
     if (!session.token) {
-      return next(req);
+        return next(req);
     }
 
     const reqWithHeaders = req.clone({

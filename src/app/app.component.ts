@@ -10,5 +10,5 @@ import { ModalComponent } from "./shared/components/modal/modal.component";
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'hospital';
+  title = 'Comer & Dormir Corporacion';
 }

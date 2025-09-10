@@ -86,7 +86,11 @@ export default class LoginComponent {
         break;
 
       default:
-        // defult to USER
+        this.store.logout()
+        this.alertStore.addAlert({
+          message: 'Esta no es la aplicacion para realizar resevaciones, dirijase al link correcto',
+          type: 'error',
+        });
         this.router.navigate(['/session/login'])
         break;
     }

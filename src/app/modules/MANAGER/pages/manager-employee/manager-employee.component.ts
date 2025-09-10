@@ -1,4 +1,10 @@
-import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { EmployeeService } from '../../service/employee.service';
 import { EmployeeDto } from '../../models/employee.interface';
 import { CommonModule, CurrencyPipe } from '@angular/common';
@@ -12,16 +18,15 @@ import { HandlerError } from '@shared/utils/handlerError';
   templateUrl: './manager-employee.component.html',
 })
 export class ManagerEmployeeComponent {
-
   // reference modals
-  @ViewChild('modalPayEmployees') modalPayEmployees!: ElementRef<HTMLDialogElement>;
+  @ViewChild('modalPayEmployees')
+  modalPayEmployees!: ElementRef<HTMLDialogElement>;
 
   // inject services
-  private readonly _employeeService = inject(EmployeeService)
+  private readonly _employeeService = inject(EmployeeService);
   private readonly alertStore = inject(AlertStore);
 
   private HandlerError = HandlerError;
-
 
   // variables signals
   employees = signal<EmployeeDto[]>([]);
@@ -34,10 +39,10 @@ export class ManagerEmployeeComponent {
 
   getAllEmployeesNoManager() {
     this._employeeService.getAllEmployeesNoManager().subscribe({
-      next: value => {
-        this.employees.set(value)
-      }
-    })
+      next: (value) => {
+        this.employees.set(value);
+      },
+    });
   }
 
   openModal() {
@@ -45,9 +50,6 @@ export class ManagerEmployeeComponent {
   }
 
   savePayroll() {
-    console.log('Guardando pago de planilla...');
-
-    console.log(this.startDate, this.endDate);
     // validar fechas
     if (!this.startDate || !this.endDate) {
       this.alertStore.addAlert({
@@ -80,19 +82,21 @@ export class ManagerEmployeeComponent {
     }
 
     // llamar al servicio para guardar el pago de planilla
-    this._employeeService.payAllEmployees(this.startDate, this.endDate).subscribe({
-      next: () => {
-        this.alertStore.addAlert({
-          message: 'Pago de planilla registrado exitosamente.',
-          type: 'success',
-        });
-        this.modalPayEmployees.nativeElement.close();
-      },
-      error: (err) => {
-        const msgDefault = 'Error al registrar el pago de planilla. Por favor, intente nuevamente más tarde.';
-        this.HandlerError.handleError(err, this.alertStore, msgDefault);
-      }
-    })
+    this._employeeService
+      .payAllEmployees(this.startDate, this.endDate)
+      .subscribe({
+        next: () => {
+          this.alertStore.addAlert({
+            message: 'Pago de planilla registrado exitosamente.',
+            type: 'success',
+          });
+          this.modalPayEmployees.nativeElement.close();
+        },
+        error: (err) => {
+          const msgDefault =
+            'Error al registrar el pago de planilla. Por favor, intente nuevamente más tarde.';
+          this.HandlerError.handleError(err, this.alertStore, msgDefault);
+        },
+      });
   }
-
 }

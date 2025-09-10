@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { TarjetComponent } from 'app/modules/employees/components/tarjet/tarjet.component';
+import { TarjetComponent } from '@shared/components/tarjet/tarjet.component';
 
 @Component({
   selector: 'app-dashboard-manager',
@@ -8,30 +8,27 @@ import { TarjetComponent } from 'app/modules/employees/components/tarjet/tarjet.
   templateUrl: './dashboard-manager.component.html',
 })
 export class DashboardManagerComponent {
+  private readonly route = inject(Router);
 
-  private readonly route = inject(Router)
-
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   goEmployees() {
-    this.route.navigate(['manager/employees'])
+    this.route.navigate(['manager/employees']);
   }
 
   goHotels() {
-    this.route.navigate(['manager/hotels'])
+    this.route.navigate(['manager/hotels']);
   }
 
   goRestaurants() {
-    this.route.navigate(['manager/restaurants'])
+    this.route.navigate(['manager/restaurants']);
   }
 
   goPromotions() {
-    this.route.navigate(['manager/promotions'])
+    this.route.navigate(['manager/promotions']);
   }
 
   goReports() {
-    this.route.navigate(['manager/reports'])
+    this.route.navigate(['manager/reports']);
   }
 }

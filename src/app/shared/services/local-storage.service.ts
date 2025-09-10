@@ -6,7 +6,7 @@ import { INITIAL_STATE } from 'app/store/auth.store';
     providedIn: 'root'
 })
 export class LocalStorageService {
-    private readonly KY_STORE: string = 'hospital-store';
+    private readonly KY_STORE: string = 'eat-sleep-store';
 
     saveState(state: Auth) {
         localStorage.setItem(this.KY_STORE, JSON.stringify(state));

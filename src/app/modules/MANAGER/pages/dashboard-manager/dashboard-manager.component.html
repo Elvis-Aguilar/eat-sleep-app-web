@@ -1,87 +1,122 @@
-<h1 class="text-xl font-bold text-center mb-6">Bienvenido al Dashboard de Gerencia General</h1>
+<h1 class="text-xl font-bold text-center mb-6">
+  Bienvenido al Dashboard de Gerencia General
+</h1>
 
 <!-- tajets -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 mb-6">
-    <div class="bg-neutral-content	rounded-xl shadow-lg p-3 text-center">
-        <!-- total de empleados -->
-        <app-tarjet [type]="'total_empleados'" [title]="'Total de empleados'" [value]="'10'"
-            [label]="'Total de empleados registrados'"></app-tarjet>
-    </div>
-    <div class="bg-neutral-content rounded-xl shadow-lg p-3 text-center">
-        <!-- empleados con mas ventas -->
-        <app-tarjet [type]="'total_empleados'" [title]="'Restaurantes'" [value]="'5'"
-            [label]="'Total de Restaurantes'"></app-tarjet>
-    </div>
-    <div class="bg-neutral-content rounded-xl shadow-lg p-3 text-center">
-        <!-- VAcaciones -->
-        <app-tarjet [type]="'total_empleados'" [title]="'Hoteles'" [value]="'3'"
-            [label]="'Total de Hoteles'"></app-tarjet>
-    </div>
-    <div class="bg-neutral-content rounded-xl shadow-lg p-3 text-center">
-        <!-- descuentos por igs y irtra -->
-        <app-tarjet [type]="'total_empleados'" [title]="'Promociones Activas'" [value]="'4'"
-            [label]="'Promociones activas'"></app-tarjet>
-    </div>
+  <div class="bg-neutral-content rounded-xl shadow-lg p-3 text-center">
+    <!-- total de empleados -->
+    <app-tarjet
+      [type]="'total_empleados'"
+      [title]="'Total de empleados'"
+      [value]="'10'"
+      [label]="'Total de empleados registrados'"
+    ></app-tarjet>
+  </div>
+  <div class="bg-neutral-content rounded-xl shadow-lg p-3 text-center">
+    <!-- empleados con mas ventas -->
+    <app-tarjet
+      [type]="'total_empleados'"
+      [title]="'Restaurantes'"
+      [value]="'5'"
+      [label]="'Total de Restaurantes'"
+    ></app-tarjet>
+  </div>
+  <div class="bg-neutral-content rounded-xl shadow-lg p-3 text-center">
+    <!-- VAcaciones -->
+    <app-tarjet
+      [type]="'total_empleados'"
+      [title]="'Hoteles'"
+      [value]="'3'"
+      [label]="'Total de Hoteles'"
+    ></app-tarjet>
+  </div>
+  <div class="bg-neutral-content rounded-xl shadow-lg p-3 text-center">
+    <!-- descuentos por igs y irtra -->
+    <app-tarjet
+      [type]="'total_empleados'"
+      [title]="'Promociones Activas'"
+      [value]="'4'"
+      [label]="'Promociones activas'"
+    ></app-tarjet>
+  </div>
 </div>
-<br>
+<br />
 <h3 class="text-xl font-bold text-center mb-6">Graficas en contruccion...</h3>
-<br>
+<br />
 
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-6 max-w-7xl mx-auto">
-    <!-- Card: Registrar Usuario -->
-    <div class="card bg-base-100 shadow-xl border border-gray-200">
-        <div class="card-body">
-            <h2 class="card-title text-primary">Gestion de Empleado</h2>
-            <p>Registra y actualiza datos de los empleados, realiza pagos semanales de planilla.</p>
-            <div class="card-actions justify-end">
-                <button data-cy="manage-employee" class="btn btn-primary" (click)="goEmployees()">Ir</button>
-            </div>
-        </div>
+<div
+  class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-6 max-w-7xl mx-auto"
+>
+  <!-- Card: Registrar Usuario -->
+  <div class="card bg-base-100 shadow-xl border border-gray-200">
+    <div class="card-body">
+      <h2 class="card-title text-primary">Gestion de Empleado</h2>
+      <p>
+        Registra y actualiza datos de los empleados, realiza pagos semanales de
+        planilla.
+      </p>
+      <div class="card-actions justify-end">
+        <button
+          data-cy="manage-employee"
+          class="btn btn-primary"
+          (click)="goEmployees()"
+        >
+          Ir
+        </button>
+      </div>
     </div>
+  </div>
 
-    <!-- Card: Gestión de Habitaciones -->
-    <div class="card bg-base-100 shadow-xl border border-gray-200">
-        <div class="card-body">
-            <h2 class="card-title text-secondary">Gestión de Hoteles</h2>
-            <p>Administra los Hoteles, crea Habitaciones, ve sus estadisticas...</p>
-            <div class="card-actions justify-end">
-                <button class="btn btn-secondary" (click)="goHotels()">Ir</button>
-            </div>
-        </div>
+  <!-- Card: Gestión de Habitaciones -->
+  <div class="card bg-base-100 shadow-xl border border-gray-200">
+    <div class="card-body">
+      <h2 class="card-title text-secondary">Gestión de Hoteles</h2>
+      <p>Administra los Hoteles, crea Habitaciones, ve sus estadisticas...</p>
+      <div class="card-actions justify-end">
+        <button class="btn btn-secondary" (click)="goHotels()">Ir</button>
+      </div>
     </div>
+  </div>
 
-    <!-- Card: Gestion de Restaurantes -->
-    <div class="card bg-base-100 shadow-xl border border-gray-200">
-        <div class="card-body">
-            <h2 class="card-title text-accent">Gestión de Restaurantes</h2>
-            <p>Administra los restaurantes, personaliza platillos, ve sus estadisticas...</p>
-            <div class="card-actions justify-end">
-                <button class="btn btn-secondary" (click)="goRestaurants()">Ir</button>
-            </div>
-        </div>
+  <!-- Card: Gestion de Restaurantes -->
+  <div class="card bg-base-100 shadow-xl border border-gray-200">
+    <div class="card-body">
+      <h2 class="card-title text-accent">Gestión de Restaurantes</h2>
+      <p>
+        Administra los restaurantes, personaliza platillos, ve sus
+        estadisticas...
+      </p>
+      <div class="card-actions justify-end">
+        <button class="btn btn-accent" (click)="goRestaurants()">Ir</button>
+      </div>
     </div>
+  </div>
 
-
-    <!-- Card: Gestion de Restaurantes -->
-    <div class="card bg-base-100 shadow-xl border border-gray-200">
-        <div class="card-body">
-            <h2 class="card-title text-accent-content">Gestión de Promociones</h2>
-            <p>Administra las Promociones, basandose en estadisticas de clientes...</p>
-            <div class="card-actions justify-end">
-                <button class="btn btn-secondary" (click)="goPromotions()">Ir</button>
-            </div>
-        </div>
+  <!-- Card: Gestion de Restaurantes -->
+  <div class="card bg-base-100 shadow-xl border border-gray-200">
+    <div class="card-body">
+      <h2 class="card-title text-success">Gestión de Promociones</h2>
+      <p>
+        Administra las Promociones, basandose en estadisticas de clientes...
+      </p>
+      <div class="card-actions justify-end">
+        <button class="btn btn-success" (click)="goPromotions()">Ir</button>
+      </div>
     </div>
+  </div>
 
-
-    <!-- Card: Reportes -->
-    <div class="card bg-base-100 shadow-xl border border-gray-200">
-        <div class="card-body">
-            <h2 class="card-title text-warning">Reportes</h2>
-            <p>Genera reportes detallados sobre la Ingresos, egresos y ganancias por areas.</p>
-            <div class="card-actions justify-end">
-                <button class="btn btn-warning" (click)="goReports()">Ir</button>
-            </div>
-        </div>
+  <!-- Card: Reportes -->
+  <div class="card bg-base-100 shadow-xl border border-gray-200">
+    <div class="card-body">
+      <h2 class="card-title text-warning">Reportes</h2>
+      <p>
+        Genera reportes detallados sobre la Ingresos, egresos y ganancias por
+        areas.
+      </p>
+      <div class="card-actions justify-end">
+        <button class="btn btn-warning" (click)="goReports()">Ir</button>
+      </div>
     </div>
+  </div>
 </div>

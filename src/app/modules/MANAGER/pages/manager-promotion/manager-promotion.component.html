@@ -1,1 +1,182 @@
-<p>manager-promotion works!</p>,
+<div class="flex flex-col gap-6">
+  <!-- Encabezado con título y acciones -->
+  <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+    <h2 class="text-2xl font-bold text-secondary">👨‍💼 Gestión de Promociones</h2>
+
+    <div class="flex gap-3">
+      <!-- Filtro -->
+      <select class="select select-bordered w-48">
+        <option disabled selected>Filtrar por...</option>
+        <option>Clientes</option>
+        <option>Habitaciones</option>
+        <option>Platillos de comida</option>
+      </select>
+
+      <!-- Botón nueva promoción -->
+      <button class="btn btn-outline btn-primary" (click)="openModal()">
+        ➕ Nueva Promoción
+      </button>
+    </div>
+  </div>
+
+  <!-- Listado de promociones -->
+  <div class="card bg-base-100 shadow-lg border border-base-300 rounded-xl">
+    <div class="card-body">
+      <h3 class="card-title mb-4 text-accent">📋 Lista de Promociones</h3>
+
+      <div class="overflow-x-auto rounded-lg border border-base-300">
+        <table class="table table-zebra w-full">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th class="text-sm">Tipo</th>
+              <th class="text-sm">Promoción</th>
+              <th class="text-sm">Descripción</th>
+              <th class="text-sm">Descuento (%)</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (promotion of promotions(); track promotion.id; let i = $index)
+            {
+            <tr class="hover:bg-accent-content transition">
+              <td>{{ i + 1 }}</td>
+              <td class="font-medium">
+                <span
+                  class="badge px-3 py-2"
+                  [ngClass]="
+                    promotion.type === 'ROOM'
+                      ? 'badge-primary '
+                      : promotion.type === 'CUSTOMER'
+                      ? 'badge-info '
+                      : 'badge-secondary '
+                  "
+                >
+                  {{ promotion.type }}
+                </span>
+              </td>
+              <td>{{ promotion.name }}</td>
+              <td>{{ promotion.description }}</td>
+              <td>{{ promotion.discountPercentage }}%</td>
+              <td class="text-right">
+                <!-- opciones elegir, entre editar, ver detalles -->
+                <div class="dropdown dropdown-left dropdown-center">
+                  <div tabindex="0" role="button" class="btn m-1">acciones</div>
+                  <ul
+                    tabindex="0"
+                    class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+                  >
+                    <li><a>Editar</a></li>
+                    <li><a>Ver detalles</a></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<dialog #modalNewPromotion class="modal">
+  <div class="modal-box max-w-lg">
+    <h3
+      class="font-bold text-xl mb-4 text-center text-primary flex items-center justify-center gap-2"
+    >
+      💵 Formulario de Nueva Promoción
+    </h3>
+
+    <!-- Mensaje de ayuda -->
+    <div class="alert alert-info text-sm mb-6">
+      <span>
+        Asigna la promoción a una habitación, platillo o cliente. Recuerda que
+        el descuento es un <b>%</b>.
+      </span>
+    </div>
+
+    <!-- Formulario -->
+    <form class="space-y-4">
+      <!-- Nombre -->
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-medium">Nombre de la Promoción</span>
+        </label>
+        <input
+          type="text"
+          placeholder="Ej: Descuento de temporada"
+          class="input input-bordered w-full"
+          required
+        />
+      </div>
+
+      <!-- Descripción -->
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-medium">Descripción</span>
+        </label>
+        <textarea
+          placeholder="Ej: 20% de descuento en habitaciones estándar"
+          class="textarea textarea-bordered w-full"
+          rows="3"
+          required
+        ></textarea>
+      </div>
+
+      <!-- Tipo de referencia -->
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-medium">Tipo</span>
+        </label>
+        <select class="select select-bordered w-full" required>
+          <option disabled selected>Selecciona el tipo</option>
+          <option value="room">Habitación</option>
+          <option value="dishes">Platillo</option>
+          <option value="customer">Cliente</option>
+        </select>
+      </div>
+
+      <!-- A quién asignar (dinámico según tipo) -->
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-medium">Asignar a</span>
+        </label>
+        <select class="select select-bordered w-full" required>
+          <option disabled selected>Selecciona una opción</option>
+          <!-- Opciones dinámicas (habitaciones, platillos o clientes) -->
+          <option>Opción 1</option>
+          <option>Opción 2</option>
+        </select>
+      </div>
+
+      <!-- Porcentaje de descuento -->
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text font-medium">% de Descuento</span>
+        </label>
+        <input
+          type="number"
+          min="1"
+          max="100"
+          step="0.01"
+          placeholder="Ej: 15"
+          class="input input-bordered w-full"
+          required
+        />
+      </div>
+
+      <!-- Botones -->
+      <div class="modal-action">
+        <button
+          type="button"
+          class="btn btn-ghost"
+          (click)="modalNewPromotion.close()"
+        >
+          Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary">Guardar Promoción</button>
+      </div>
+    </form>
+  </div>
+</dialog>

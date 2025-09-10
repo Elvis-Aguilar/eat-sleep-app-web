@@ -52,7 +52,7 @@
                       : 'badge-secondary '
                   "
                 >
-                  {{ promotion.type }}
+                  {{ getTypeTraduc(promotion.type) }}
                 </span>
               </td>
               <td>{{ promotion.name }}</td>
@@ -105,8 +105,10 @@
         </label>
         <input
           type="text"
+          name="promotionName"
           placeholder="Ej: Descuento de temporada"
           class="input input-bordered w-full"
+          [(ngModel)]="newPromotionModel().name"
           required
         />
       </div>
@@ -117,10 +119,12 @@
           <span class="label-text font-medium">Descripción</span>
         </label>
         <textarea
+          name="promotionDescription"
           placeholder="Ej: 20% de descuento en habitaciones estándar"
           class="textarea textarea-bordered w-full"
           rows="3"
           required
+          [(ngModel)]="newPromotionModel().description"
         ></textarea>
       </div>
 
@@ -129,7 +133,13 @@
         <label class="label">
           <span class="label-text font-medium">Tipo</span>
         </label>
-        <select class="select select-bordered w-full" required>
+        <select
+          name="typeReference"
+          class="select select-bordered w-full"
+          required
+          [(ngModel)]="typeReference"
+          (ngModelChange)="getCatalogByTypeReference()"
+        >
           <option disabled selected>Selecciona el tipo</option>
           <option value="room">Habitación</option>
           <option value="dishes">Platillo</option>
@@ -137,16 +147,21 @@
         </select>
       </div>
 
-      <!-- A quién asignar (dinámico según tipo) -->
+      <!-- A quién asignar -->
       <div class="form-control">
         <label class="label">
           <span class="label-text font-medium">Asignar a</span>
         </label>
-        <select class="select select-bordered w-full" required>
+        <select
+          name="refenceId"
+          class="select select-bordered w-full"
+          required
+          [(ngModel)]="newPromotionModel().refenceId"
+        >
           <option disabled selected>Selecciona una opción</option>
-          <!-- Opciones dinámicas (habitaciones, platillos o clientes) -->
-          <option>Opción 1</option>
-          <option>Opción 2</option>
+          @for (item of refernces(); track $index) {
+          <option [value]="item.id">{{ item.name }}</option>
+          }
         </select>
       </div>
 
@@ -157,12 +172,14 @@
         </label>
         <input
           type="number"
+          name="discountPercentage"
           min="1"
           max="100"
           step="0.01"
           placeholder="Ej: 15"
           class="input input-bordered w-full"
           required
+          [(ngModel)]="newPromotionModel().discountPercentage"
         />
       </div>
 
@@ -175,7 +192,13 @@
         >
           Cancelar
         </button>
-        <button type="submit" class="btn btn-primary">Guardar Promoción</button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          (click)="saveNewPromotion()"
+        >
+          Guardar Promoción
+        </button>
       </div>
     </form>
   </div>

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { ApiConfigService } from '@shared/services/api-config.service';
 import { Observable } from 'rxjs';
-import { Promotion } from '../models/promotion.interface';
+import { NewPromotion, Promotion } from '../models/promotion.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +13,10 @@ export class PromotionService {
   private readonly API_PROMOTION = this.apiConfigService.API_PROMOTION;
 
   constructor() {}
+
+  savePromotion(newPromotion: NewPromotion): Observable<void> {
+    return this._http.post<void>(this.API_PROMOTION, newPromotion);
+  }
 
   getReservationById(id: string): Observable<Promotion> {
     return this._http.get<Promotion>(`${this.API_PROMOTION}/${id}`);

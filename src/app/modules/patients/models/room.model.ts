@@ -3,10 +3,14 @@ export interface NewRoom {
   costPerDay?: number;
 }
 
-export type Room = NewRoom & {
-  id: number;
-  isOccupied: boolean;
-  isUnderMaintenance: boolean;
-  createdAt: string;
-  updatedAt?: string;
-};
+export interface Room {
+    id: string;
+    roomNumber: string;
+    pricePerDay: number;
+    costMaintenancePerDay: number;
+    description: string;
+    capacity: number;
+    state:string;
+    hotelName:string;
+    urlImage: string;
+}

@@ -52,7 +52,7 @@ export class ManagerHotelComponent {
   }
 
   openModalOpinios(hotel: Hotel) {
-    this.titulo.set(`Opiniones de Hotel ${hotel.name}`);
+    this.titulo.set(`Opiniones del ${hotel.name}`);
     this.referenceId.set(hotel.id);
     this.showModal.set(true);
     this.modalOpinions.nativeElement.showModal();

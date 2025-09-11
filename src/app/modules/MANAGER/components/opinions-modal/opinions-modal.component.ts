@@ -30,11 +30,16 @@ export class OpinionsModalComponent {
     this.getReviews();
   }
 
+  ngOnChanges(): void {
+    this.getReviews();
+  }
+
   onClose() {
     this.close.emit();
   }
 
   getReviews() {
+    this.reviews.set([])
     if (this.type() === 'dishes') {
       this.getReviewsByDishesId();
     }
@@ -49,7 +54,7 @@ export class OpinionsModalComponent {
     }
   }
 
-  getReviewsByHotelId() {    
+  getReviewsByHotelId() {
     this.reviewsService.getAllHotels(this.refernceId()).subscribe({
       next: (reviews) => {
         this.reviews.set(reviews);

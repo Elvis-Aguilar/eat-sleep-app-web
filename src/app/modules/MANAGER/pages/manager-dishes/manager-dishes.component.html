@@ -1,17 +1,15 @@
 <div class="flex flex-col gap-6">
   <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-    <h2 class="text-2xl font-bold text-secondary">
-      👨‍💼 Gestión de Restaurantes
-    </h2>
+    <h2 class="text-2xl font-bold text-secondary">👨‍💼 Gestión de Platillos</h2>
     <div class="flex gap-3">
-      <button class="btn btn-outline btn-primary">➕ Nuevo Restaurante</button>
+      <button class="btn btn-outline btn-primary">➕ Nuevo Platillo</button>
     </div>
   </div>
 
   <!-- listado de hoteles -->
   <div class="card bg-base-100 shadow-lg border border-primary rounded-xl">
     <div class="card-body">
-      <h3 class="card-title mb-4 text-accent">📋 Lista de Restaurantes</h3>
+      <h3 class="card-title mb-4 text-accent">📋 Lista de Habitaciones</h3>
 
       <div class="overflow-x-auto rounded-lg border border-base-300">
         <table class="table table-zebra w-full">
@@ -19,30 +17,30 @@
             <tr>
               <th>#</th>
               <th class="text-sm">Nombre</th>
-              <th class="text-sm">Dirección</th>
-              <th class="text-sm">No. Telefono</th>
-              <th class="text-sm">Capacidad</th>
-              <th class="text-sm">Hora de apertura</th>
-              <th class="text-sm">Hora cierre</th>
+              <th class="text-sm">Descripcion</th>
+              <th class="text-sm">Precio Venta</th>
+              <th class="text-sm">Costo Preparacion</th>
+              <th class="text-sm">Restaurante</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            @for (restaurant of restaurants(); track restaurant.id; let i =
-            $index){
+            @for (dise of dishes(); track dise.id; let i = $index){
             <tr class="hover:bg-succes-content transition">
               <td>{{ i + 1 }}</td>
-              <td>{{ restaurant.name }}</td>
-              <td>{{ restaurant.address }}</td>
-              <td>{{ restaurant.phone }}</td>
+              <td>{{ dise.name }}</td>
+              <td>{{ dise.description }}</td>
+              <td>
+                {{ dise.price | currency : "GTQ" : "symbol" : "1.2-2" }}
+              </td>
+              <td>
+                {{ dise.cost | currency : "GTQ" : "symbol" : "1.2-2" }}
+              </td>
               <td class="font-medium">
                 <span class="badge px-3 py-2 badge-secondary">
-                  {{ restaurant.capacity }}
+                  {{ dise.restaurantName }}
                 </span>
               </td>
-              <td>{{ restaurant.openingTime | appTimeFormatPipe }}</td>
-              <td>{{ restaurant.closingTime | appTimeFormatPipe }}</td>
-
               <td class="text-right">
                 <div class="dropdown dropdown-left">
                   <div tabindex="0" role="button" class="btn m-1">Opciones</div>
@@ -52,12 +50,7 @@
                   >
                     <li><button>Editar</button></li>
                     <li>
-                      <button (click)="goDishes(restaurant.id)">
-                        Ver Menu
-                      </button>
-                    </li>
-                    <li>
-                      <button (click)="openModalOpinios(restaurant)">
+                      <button (click)="openModalOpinios(dise)">
                         Ver Opiniones
                       </button>
                     </li>
@@ -78,7 +71,7 @@
   <app-opinions-modal
     (close)="closeModalOpinions()"
     [refernceId]="referenceId()"
-    [type]="'restaurant'"
+    [type]="'dishes'"
     [titulo]="titulo()"
   />
   }

@@ -44,6 +44,13 @@ const adminRoutes: Routes = [
       ),
   },
   {
+    path: 'restaurants/dishes/:id',
+    loadComponent: () =>
+      import('./pages/manager-dishes/manager-dishes.component').then(
+        (m) => m.ManagerDishesComponent
+      ),
+  },
+  {
     path: 'promotions',
     loadComponent: () =>
       import('./pages/manager-promotion/manager-promotion.component').then(

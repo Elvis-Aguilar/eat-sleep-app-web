@@ -1,9 +1,10 @@
 export interface Dishes {
-    id: string;
-    name: string;
-    description: string;
-    price: number;
-    restaurantName: string;
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  cost: number;
+  restaurantName: string;
 }
 
 export interface Restaurant {

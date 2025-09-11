@@ -32,6 +32,13 @@ export class ApiConfigService {
   // promotions
   public readonly API_PROMOTION = `${this.API_BASE_PROMOTION}/promotions`;
 
+  // reviews
+  public readonly API_REVIEWS = `${this.API_BASE_REVIEWS}/reviews`;
+  public readonly API_REVIEWS_HOTEL = `${this.API_REVIEWS}/hotel`;
+  public readonly API_REVIEWS_RESTAURANT = `${this.API_REVIEWS}/restaurant`;
+  public readonly API_REVIEWS_ROOM = `${this.API_REVIEWS}/room`;
+  public readonly API_REVIEWS_DISHES = `${this.API_REVIEWS}/dishes`;
+
   /**
    * eliminar xd
    */

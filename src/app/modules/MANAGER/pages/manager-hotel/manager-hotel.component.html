@@ -48,7 +48,11 @@
                         Ver Habitaciones
                       </button>
                     </li>
-                    <li><button>Ver Opiniones</button></li>
+                    <li>
+                      <button (click)="openModalOpinios(hotel)">
+                        Ver Opiniones
+                      </button>
+                    </li>
                   </ul>
                 </div>
               </td>
@@ -60,3 +64,14 @@
     </div>
   </div>
 </div>
+
+<dialog #modalOpinions id="my_modal_1" class="modal">
+  @if (showModal()) {
+  <app-opinions-modal
+    (close)="closeModalOpinions()"
+    [refernceId]="referenceId()"
+    [type]="'hotel'"
+    [titulo]="titulo()"
+  />
+  }
+</dialog>

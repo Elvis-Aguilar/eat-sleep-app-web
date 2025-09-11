@@ -1,6 +1,8 @@
 <div class="flex flex-col gap-6">
   <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-    <h2 class="text-2xl font-bold text-secondary">👨‍💼 Gestión de Habitaciones</h2>
+    <h2 class="text-2xl font-bold text-secondary">
+      👨‍💼 Gestión de Habitaciones
+    </h2>
     <div class="flex gap-3">
       <button class="btn btn-outline btn-primary">➕ Nuevo Habitacion</button>
     </div>
@@ -29,8 +31,15 @@
             <tr class="hover:bg-succes-content transition">
               <td>{{ i + 1 }}</td>
               <td>{{ room.roomNumber }}</td>
-              <td>{{ room.pricePerDay | currency : "GTQ" : "symbol" : "1.2-2" }}</td>
-              <td>{{ room.costMaintenancePerDay | currency : "GTQ" : "symbol" : "1.2-2" }}</td>
+              <td>
+                {{ room.pricePerDay | currency : "GTQ" : "symbol" : "1.2-2" }}
+              </td>
+              <td>
+                {{
+                  room.costMaintenancePerDay
+                    | currency : "GTQ" : "symbol" : "1.2-2"
+                }}
+              </td>
               <td class="font-medium">
                 <span class="badge px-3 py-2 badge-secondary">
                   {{ room.capacity }}
@@ -54,7 +63,11 @@
                         Ver Reservaciones
                       </button>
                     </li>
-                    <li><button>Ver Opiniones</button></li>
+                    <li>
+                      <button (click)="openModalOpinios(room)">
+                        Ver Opiniones
+                      </button>
+                    </li>
                   </ul>
                 </div>
               </td>
@@ -66,3 +79,14 @@
     </div>
   </div>
 </div>
+
+<dialog #modalOpinions id="my_modal_1" class="modal">
+  @if (showModal()) {
+  <app-opinions-modal
+    (close)="closeModalOpinions()"
+    [refernceId]="referenceId()"
+    [type]="'room'"
+    [titulo]="titulo()"
+  />
+  }
+</dialog>

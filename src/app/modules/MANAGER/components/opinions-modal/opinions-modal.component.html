@@ -1,0 +1,60 @@
+<div class="modal-box w-11/12 max-w-7xl rounded-2xl shadow-lg">
+  <!-- Encabezado -->
+  <div class="flex items-center justify-between border-b pb-3 mb-4">
+    <h2 class="text-2xl font-bold text-primary">
+      {{ titulo() }}
+    </h2>
+    <form method="dialog">
+      <button
+        class="btn btn-sm btn-circle btn-ghost hover:bg-base-200"
+        (click)="onClose()"
+      >
+        ✕
+      </button>
+    </form>
+  </div>
+
+  <!-- Subtítulo -->
+  <h3 class="text-lg font-semibold mb-4 text-gray-700">Opiniones</h3>
+
+  <!-- Lista de opiniones -->
+  <div class="space-y-4 max-h-[75vh] overflow-y-auto pr-2">
+    @for (review of reviews(); track $index) {
+    <div
+      class="p-4 border rounded-lg shadow-sm bg-base-100 hover:shadow-md transition"
+    >
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-bold text-success">{{ review.customerName }}</span>
+        <!-- Estrellas -->
+        <div class="flex text-yellow-400">
+          @for (item of [1,2,3,4,5]; track $index) {
+          <ng-container>
+            @if (review.rating >= item) {
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 fill-current"
+              viewBox="0 0 20 20"
+            >
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.975a1 1 0 00.95.69h4.178c.969 0 1.371 1.24.588 1.81l-3.385 2.46a1 1 0 00-.364 1.118l1.286 3.975c.3.921-.755 1.688-1.54 1.118l-3.385-2.46a1 1 0 00-1.175 0l-3.385 2.46c-.785.57-1.84-.197-1.54-1.118l1.286-3.975a1 1 0 00-.364-1.118L2.097 9.402c-.783-.57-.38-1.81.588-1.81h4.178a1 1 0 00.95-.69l1.286-3.975z"
+              />
+            </svg>
+            }
+          </ng-container>
+          }
+        </div>
+      </div>
+      <p class="text-gray-600">{{ review.comment }}</p>
+    </div>
+    }@empty {
+    <p class="text-gray-500 italic">No hay opiniones aún.</p>
+    }
+  </div>
+
+  <!-- Acción -->
+  <div class="modal-action">
+    <form method="dialog">
+      <button class="btn btn-primary px-6" (click)="onClose()">Cerrar</button>
+    </form>
+  </div>
+</div>

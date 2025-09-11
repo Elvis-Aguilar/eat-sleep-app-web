@@ -1,38 +1,44 @@
 <div class="flex flex-col gap-6">
   <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-    <h2 class="text-2xl font-bold text-secondary">👨‍💼 Gestión de Hoteles</h2>
+    <h2 class="text-2xl font-bold text-secondary">👨‍💼 Gestión de Habitaciones</h2>
     <div class="flex gap-3">
-      <button class="btn btn-outline btn-primary">➕ Nuevo Hotel</button>
+      <button class="btn btn-outline btn-primary">➕ Nuevo Habitacion</button>
     </div>
   </div>
 
   <!-- listado de hoteles -->
   <div class="card bg-base-100 shadow-lg border border-primary rounded-xl">
     <div class="card-body">
-      <h3 class="card-title mb-4 text-accent">📋 Lista de Hoteles</h3>
+      <h3 class="card-title mb-4 text-accent">📋 Lista de Habitaciones</h3>
 
       <div class="overflow-x-auto rounded-lg border border-base-300">
         <table class="table table-zebra w-full">
           <thead>
             <tr>
               <th>#</th>
-              <th class="text-sm">Nombre</th>
-              <th class="text-sm">Dirección</th>
-              <th class="text-sm">No. Telefono</th>
-              <th class="text-sm">Total Habitaciones</th>
+              <th class="text-sm">Numero</th>
+              <th class="text-sm">Precio por dia</th>
+              <th class="text-sm">Costo mantenimiento</th>
+              <th class="text-sm">Capacidad</th>
+              <th class="text-sm">Hotel</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            @for (hotel of hotels(); track hotel.id; let i = $index){
+            @for (room of rooms(); track room.id; let i = $index){
             <tr class="hover:bg-succes-content transition">
               <td>{{ i + 1 }}</td>
-              <td>{{ hotel.name }}</td>
-              <td>{{ hotel.address }}</td>
-              <td>{{ hotel.phone }}</td>
+              <td>{{ room.roomNumber }}</td>
+              <td>{{ room.pricePerDay | currency : "GTQ" : "symbol" : "1.2-2" }}</td>
+              <td>{{ room.costMaintenancePerDay | currency : "GTQ" : "symbol" : "1.2-2" }}</td>
               <td class="font-medium">
                 <span class="badge px-3 py-2 badge-secondary">
-                  {{ hotel.totalRooms }}
+                  {{ room.capacity }}
+                </span>
+              </td>
+              <td class="font-medium">
+                <span class="badge px-3 py-2 badge-accent">
+                  {{ room.hotelName }}
                 </span>
               </td>
               <td class="text-right">
@@ -44,8 +50,8 @@
                   >
                     <li><button>Editar</button></li>
                     <li>
-                      <button (click)="goRooms(hotel.id)">
-                        Ver Habitaciones
+                      <button (click)="goReservations(room.id)">
+                        Ver Reservaciones
                       </button>
                     </li>
                     <li><button>Ver Opiniones</button></li>

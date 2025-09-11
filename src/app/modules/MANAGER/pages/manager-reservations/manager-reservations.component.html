@@ -1,0 +1,73 @@
+<div class="flex flex-col gap-6">
+  <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+    <h2 class="text-2xl font-bold text-secondary">
+      👨‍💼 Gestión de Reservaciones de la Habitacion: {{ room()?.roomNumber }}
+    </h2>
+    <!-- Filtro -->
+    <select
+      class="select select-bordered w-48"
+      name="reservationFilter"
+      (change)="filter.set($any($event.target).value)"
+    >
+      <option disabled selected>Filtrar por...</option>
+      <option value="">Todos</option>
+      <option value="reservado">Reservados</option>
+      <option value="pagado">Pagados</option>
+    </select>
+  </div>
+
+  <div class="card bg-base-100 shadow-lg border border-accent rounded-xl">
+    <div class="card-body">
+      <h3 class="card-title mb-4 text-accent">📋 Lista de Reservaciones</h3>
+      <div class="overflow-x-auto rounded-lg border border-base-300">
+        <table class="table table-zebra w-full">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th class="text-sm">Cliente</th>
+              <th class="text-sm">Fecha inicio</th>
+              <th class="text-sm">Fecha final</th>
+              <th class="text-sm">Estado</th>
+              <th class="text-sm">Precio por noche</th>
+              <th class="text-sm">Descuento (%)</th>
+              <th class="text-sm">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (reservation of reservations() | appReservationFilter:filter();
+            track reservation.id; let i = $index){
+            <tr class="hover:bg-succes-content transition">
+              <td>{{ i + 1 }}</td>
+              <td>{{ getCustomerById(reservation.customerId) }}</td>
+              <td>{{ reservation.startDate }}</td>
+              <td>{{ reservation.endDate }}</td>
+              <td>
+                <span
+                  class="badge badge-lg"
+                  [ngClass]="{
+                  'badge-accent': reservation.state === 'Reservado',
+                  'badge-success': reservation.state === 'pagado',
+                }"
+                  >{{ reservation.state }}</span
+                >
+              </td>
+              <td>
+                {{
+                  reservation.pricePerDay
+                    | currency : "GTQ" : "symbol" : "1.2-2"
+                }}
+              </td>
+              <td>{{ reservation.discountPercentage | percent }}</td>
+              <td class="text-primary font-bold">
+                {{
+                  reservation.totalPrice | currency : "GTQ" : "symbol" : "1.2-2"
+                }}
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -19,6 +19,10 @@ export class EmployeeService {
     return this._http.get<EmployeeDto[]>(`${this.API_EMPLOYEE}/all/no-manager`);
   }
 
+  getEmployeeById(id: string): Observable<EmployeeDto> {
+    return this._http.get<EmployeeDto>(`${this.API_EMPLOYEE}/${id}`);
+  }
+
   payAllEmployees(startDate: string, endDate: string): Observable<void> {
     return this._http.post<void>(`${this.API_PAY_EMPLOYEES}`, {
       startDate,

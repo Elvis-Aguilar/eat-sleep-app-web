@@ -12,6 +12,7 @@ export const INITIAL_STATE: Auth = {
         email: "",
         cui:"",
         active:false,
+        employeeId: '',
         roleName: Rol.GERENTE,
     }
 };

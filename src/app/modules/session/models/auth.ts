@@ -25,6 +25,7 @@ export interface Session {
     email: string
     cui: string
     active: boolean
+    employeeId:string;
     roleName: Rol
 }
 

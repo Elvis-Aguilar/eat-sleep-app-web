@@ -1,0 +1,132 @@
+<div class="flex flex-col gap-6">
+  <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+    <h2 class="text-2xl font-bold text-secondary">
+      👨‍💼 Gestión de Reservaciones
+    </h2>
+
+    <div class="flex gap-3">
+      <!-- Filtro -->
+      <select
+        class="select select-bordered w-48"
+        name="reservationFilter"
+        [ngModel]="filterState()"
+        (change)="filterState.set($any($event.target).value)"
+      >
+        <option disabled selected>Filtrar por Estado..</option>
+        <option value="">Todos</option>
+        <option value="reservado">Reservados</option>
+        <option value="pagado">Pagados</option>
+      </select>
+
+      <select
+        class="select select-bordered w-48"
+        name="reservationFilterCustomer"
+        [ngModel]="filterCustomer()"
+        (change)="filterCustomer.set($any($event.target).value)"
+      >
+        <option disabled selected>Filtrar por Cliente...</option>
+        <option value="">Todos</option>
+        @for (customer of customers(); track $index) {
+        <option [value]="customer.id">{{ customer.fullName }}</option>
+        }
+      </select>
+
+      <select
+        class="select select-bordered w-48"
+        name="reservationFilterRoom"
+        [ngModel]="filterRoom()"
+        (change)="filterRoom.set($any($event.target).value)"
+      >
+        <option disabled selected>Filtrar por Cliente...</option>
+        <option value="">Todos</option>
+        @for (room of rooms(); track $index) {
+        <option [value]="room.id">{{ room.roomNumber }}</option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <div class="card bg-base-100 shadow-lg border border-accent rounded-xl">
+    <div class="card-body">
+      <h3 class="card-title mb-4 text-accent">📋 Lista de Reservaciones</h3>
+      <div class="overflow-x-auto rounded-lg border border-base-300">
+        <table class="table table-zebra w-full">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th class="text-sm">Cliente</th>
+              <th class="text-sm">Fecha inicio</th>
+              <th class="text-sm">Fecha final</th>
+              <th class="text-sm">Estado</th>
+              <th class="text-sm">Precio por noche</th>
+              <th class="text-sm">Descuento (%)</th>
+              <th class="text-sm">Total</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (reservation of reservations() |
+            appReservationFilter:filterState() |
+            appReservarionFilterRoom:filterRoom() |
+            appReservationFilterCustomer:filterCustomer() ;track reservation.id;
+            let i = $index){
+            <tr class="hover:bg-succes-content transition">
+              <td>{{ i + 1 }}</td>
+              <td>{{ getCustomerById(reservation.customerId) }}</td>
+              <td>{{ reservation.startDate }}</td>
+              <td>{{ reservation.endDate }}</td>
+              <td>
+                <span
+                  class="badge badge-lg"
+                  [ngClass]="{
+                  'badge-accent': reservation.state === 'Reservado',
+                  'badge-success': reservation.state === 'Pagado',
+                }"
+                  >{{ reservation.state }}</span
+                >
+              </td>
+              <td>
+                {{
+                  reservation.pricePerDay
+                    | currency : "GTQ" : "symbol" : "1.2-2"
+                }}
+              </td>
+              <td>{{ reservation.discountPercentage | percent }}</td>
+              <td class="text-primary font-bold">
+                {{
+                  reservation.totalPrice | currency : "GTQ" : "symbol" : "1.2-2"
+                }}
+              </td>
+              <td class="text-right">
+                <div class="dropdown dropdown-left">
+                  <div tabindex="0" role="button" class="btn m-1">Opciones</div>
+                  <ul
+                    tabindex="0"
+                    class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+                  >
+                    <li>
+                      <!-- -->
+                      @if (reservation.state === 'Reservado') {
+                      <button (click)="payReservation(reservation)">
+                        Cobrar Reservacion
+                      </button>
+                      }
+
+                      <!-- -->
+                      @if (reservation.state === 'Pagado') {
+                      <button (click)="generetedBillPDF(reservation)">
+                        Descargar Factura
+                      </button>
+                      }
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

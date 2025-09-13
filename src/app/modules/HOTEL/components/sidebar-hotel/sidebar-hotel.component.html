@@ -10,7 +10,7 @@
     <ul
         class="bg-base-100 px-0 flex flex-col items-stretch space-y-2 h-full pt-2 transition-all duration-300 ease-in-out border-t-1 border-r-1 rounded-tr-md">
         <li [ngClass]="{ 'tooltip tooltip-right': isCollapsed }" data-tip="Dashboard">
-            <a class="btn btn-ghost px-4 justify-start w-full" routerLink="/employee-management/dashboard">
+            <a class="btn btn-ghost px-4 justify-start w-full" routerLink="/hotel/dashboard">
                 <i-lucide [img]="Dashboard"></i-lucide>
                 @if (!isCollapsed) {
                 <span class="truncate">Dashboard</span>
@@ -18,53 +18,35 @@
             </a>
         </li>
 
-        <li [ngClass]="{ 'tooltip tooltip-right': isCollapsed }" data-tip="Registrar empleados">
-            <a class="btn btn-ghost px-4 justify-start w-full" routerLink="/employee-management/register">
-                <i-lucide [img]="PublishMagazine"></i-lucide>
-                @if (!isCollapsed) {
-                <span class="truncate">Registrar empleados</span>
-                }
-            </a>
-        </li>
-
-        <li [ngClass]="{ 'tooltip tooltip-right': isCollapsed }" data-tip="Gestionar Vacaciones">
-            <a class="btn btn-ghost px-4 justify-start w-full" routerLink="/employee-management/vacations">
+        <li [ngClass]="{ 'tooltip tooltip-right': isCollapsed }" data-tip="Detalles de hotel">
+            <a class="btn btn-ghost px-4 justify-start w-full" (click)="goHotel()">
                 <i-lucide [img]="Magazines"></i-lucide>
                 @if (!isCollapsed) {
-                <span class="truncate">Vacaciones</span>
+                <span class="truncate">Hotel</span>
                 }
             </a>
         </li>
 
-        <li [ngClass]="{ 'tooltip tooltip-right': isCollapsed }" data-tip="Gestionar areas de trabajo">
-            <a class="btn btn-ghost px-4 justify-start w-full" routerLink="/employee-management/areas">
+        <li [ngClass]="{ 'tooltip tooltip-right': isCollapsed }" data-tip="Habitaciones">
+            <a class="btn btn-ghost px-4 justify-start w-full" (click)="goRooms()">
                 <i-lucide [img]="PublishIssue"></i-lucide>
                 @if (!isCollapsed) {
-                <span class="truncate">Areas</span>
+                <span class="truncate">Habitaciones</span>
                 }
             </a>
         </li>
 
-        <li [ngClass]="{ 'tooltip tooltip-right': isCollapsed }" data-tip="Gestionar Empleados">
-            <a class="btn btn-ghost px-4 justify-start w-full" routerLink="/employee-management/employees">
-                <i-lucide [img]="Wallet"></i-lucide>
-                @if (!isCollapsed) {
-                <span class="truncate">Empleados</span>
-                }
-            </a>
-        </li>
-
-        <li [ngClass]="{ 'tooltip tooltip-right': isCollapsed }" data-tip="Gestion de pagos a medicos especialistas">
-            <a class="btn btn-ghost px-4 justify-start w-full" routerLink="/employee-management/payment-specialist">
+        <li [ngClass]="{ 'tooltip tooltip-right': isCollapsed }" data-tip="Reservaciones">
+            <a class="btn btn-ghost px-4 justify-start w-full" (click)="goReservations()">
                 <i-lucide [img]="Payment"></i-lucide>
                 @if (!isCollapsed) {
-                <span class="truncate">Pago especialistas</span>
+                <span class="truncate">Reservaciones</span>
                 }
             </a>
         </li>
 
         <li [ngClass]="{ 'tooltip tooltip-right': isCollapsed }" data-tip="Reportes">
-            <a class="btn btn-ghost px-4 justify-start w-full" routerLink="/employee-management/home-reports">
+            <a class="btn btn-ghost px-4 justify-start w-full" (click)="goReports()">
                 <i-lucide [img]="Reports"></i-lucide>
                 @if (!isCollapsed) {
                 <span class="truncate">Reportes</span>

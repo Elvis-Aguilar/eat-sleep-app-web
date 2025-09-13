@@ -1,0 +1,71 @@
+<div class="flex flex-col gap-6">
+  <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+    <h2 class="text-2xl font-bold text-secondary">Habitaciones</h2>
+    <div class="flex gap-3"></div>
+  </div>
+
+  <!-- listado de hoteles -->
+  <div class="card bg-base-100 shadow-lg border border-primary rounded-xl">
+    <div class="card-body">
+      <h3 class="card-title mb-4 text-accent">📋 Lista de Habitaciones</h3>
+
+      <div class="overflow-x-auto rounded-lg border border-base-300">
+        <table class="table table-zebra w-full">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th class="text-sm">Numero</th>
+              <th class="text-sm">Precio por dia</th>
+              <th class="text-sm">Costo mantenimiento</th>
+              <th class="text-sm">Capacidad</th>
+              <th class="text-sm">Hotel</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (room of rooms(); track room.id; let i = $index){
+            <tr class="hover:bg-succes-content transition">
+              <td>{{ i + 1 }}</td>
+              <td>{{ room.roomNumber }}</td>
+              <td>
+                {{ room.pricePerDay | currency : "GTQ" : "symbol" : "1.2-2" }}
+              </td>
+              <td>
+                {{
+                  room.costMaintenancePerDay
+                    | currency : "GTQ" : "symbol" : "1.2-2"
+                }}
+              </td>
+              <td class="font-medium">
+                <span class="badge px-3 py-2 badge-secondary">
+                  {{ room.capacity }}
+                </span>
+              </td>
+              <td class="font-medium">
+                <span class="badge px-3 py-2 badge-accent">
+                  {{ room.hotelName }}
+                </span>
+              </td>
+              <td class="text-right">
+                <div class="dropdown dropdown-left">
+                  <div tabindex="0" role="button" class="btn m-1">Opciones</div>
+                  <ul
+                    tabindex="0"
+                    class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+                  >
+                    <li>
+                      <button (click)="goReservations(room.id)">
+                        Ver Reservaciones
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

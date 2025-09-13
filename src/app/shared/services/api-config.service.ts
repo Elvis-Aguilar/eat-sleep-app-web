@@ -28,6 +28,9 @@ export class ApiConfigService {
 
   //finance
   public readonly API_PAY_EMPLOYEES = `${this.API_BASE_FINANCE}/payments/employees`;
+  public readonly API_BILL = `${this.API_BASE_FINANCE}/bills`;
+  public readonly API_EXPORT = `${this.API_BASE_FINANCE}/exports`;
+
 
   // promotions
   public readonly API_PROMOTION = `${this.API_BASE_PROMOTION}/promotions`;

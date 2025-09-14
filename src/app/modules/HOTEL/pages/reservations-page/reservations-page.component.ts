@@ -1,7 +1,6 @@
 import { NgClass, PercentPipe, CurrencyPipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Room } from '@patients/models/room.model';
 import { Customer } from 'app/modules/MANAGER/models/customer.interface';
 import { Reservation } from 'app/modules/MANAGER/models/reservation.interface';
 import { ReservationFilterPipe } from 'app/modules/MANAGER/pipes/reservation-filter.pipe';
@@ -15,6 +14,7 @@ import { BillService } from '../../services/Bill.service';
 import { HandlerError } from '@shared/utils/handlerError';
 import { AlertStore } from 'app/store/alert.store';
 import { FormsModule } from "@angular/forms";
+import { Room } from 'app/modules/MANAGER/models/hotel.interface';
 
 @Component({
   selector: 'app-reservations-page',

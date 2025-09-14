@@ -1,0 +1,154 @@
+<div class="min-h-screen">
+  <!-- Header -->
+  <header class="navbar">
+    <div class="flex-1">
+      <h1 class="text-2xl font-bold ml-4">Registrar Orden</h1>
+    </div>
+  </header>
+  <!-- Body -->
+  <main class="container mx-auto p-4 flex flex-col md:flex-row gap-4">
+    <!-- First 50% - Products Table -->
+    <div class="md:w-1/2">
+      <div class="overflow-x-auto">
+        <table class="table w-full">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Precio</th>
+              <th>Descuento Promocion</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (dise of dishes(); track dise.id; let i = $index) {
+            <tr
+              data-cy="sell-medicine"
+              (click)="addToOrder(dise)"
+              class="cursor-pointer hover"
+            >
+              <td>{{ i + 1 }}</td>
+              <td>{{ dise.name }}</td>
+              <td>{{ dise.price | currency : "Q" }}</td>
+              <td>%{{ getDiscountDishId(dise.id) }}</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Second 50% - Sale Details -->
+    <div class="md:w-1/2">
+      <h2 class="text-xl font-bold mb-2">Detalle de la Orden</h2>
+      <h3 class="text-lg mb-4">
+        Información de la Orden y Platillos seleccionados
+      </h3>
+
+      <!-- Form Inputs -->
+      <div class="mb-4">
+        <label class="label">
+          <span class="label-text">Selecciones el cliente (nombre - CUI)</span>
+        </label>
+        <select
+          data-cy="patient-select"
+          class="select select-bordered w-full text-md"
+          [(ngModel)]="customerId"
+        >
+          @for (customer of customers; track $index) {
+          <option [value]="customer.id">
+            {{ customer.fullName }} - {{ customer.cui }}
+          </option>
+          }
+        </select>
+      </div>
+
+      <!-- Sale Items Table -->
+      <div class="overflow-x-auto">
+        <table class="table w-full">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Cantidad</th>
+              <th>Precio Unitario</th>
+              <th>Descuento</th>
+              <th>Subtotal</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of saleItems">
+              <td>{{ item.name }}</td>
+              <td>
+                <div class="flex items-center gap-2">
+                  <button
+                    class="btn btn-xs btn-outline"
+                    (click)="decreaseQuantity(item)"
+                  >
+                    -
+                  </button>
+                  <span>{{ item.quantity }}</span>
+                  <button
+                    class="btn btn-xs btn-outline"
+                    (click)="increaseQuantity(item)"
+                  >
+                    +
+                  </button>
+                </div>
+              </td>
+              <td>{{ item.price | currency : "Q" }}</td>
+              <td>%{{ getDiscountDishId(item.dishId) }}</td>
+              <td>{{ getSubTotal(item) | currency : "Q" }}</td>
+              <td>
+                <button class="btn btn-error btn-xs" (click)="removeItem(item)">
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Total and Register Button -->
+      <div
+        class="mt-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
+      >
+        <!-- Resumen -->
+        <div
+          class="card bg-base-100 shadow-md border border-base-300 w-full md:w-2/3"
+        >
+          <div class="card-body p-4 space-y-2">
+            <div class="flex justify-between">
+              <span class="font-medium">Subtotal:</span>
+              <span class="font-bold">{{
+                getSubtotales() | currency : "Q"
+              }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="font-medium">Descuento de Cliente:</span>
+              <span class="text-info font-bold"
+                >- %{{ getDiscountCustomerId() }}</span
+              >
+            </div>
+            <div class="divider my-2"></div>
+            <div class="flex justify-between text-lg">
+              <span class="font-bold">TOTAL:</span>
+              <span class="text-primary font-extrabold">{{
+                calculateTotal() | currency : "Q"
+              }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón de acción -->
+        <button
+          data-cy="register-sale"
+          class="btn btn-primary self-end md:self-center"
+          [disabled]="saleItems.length === 0 || customerId === ''"
+          (click)="registerSale()"
+        >
+          Registrar Venta
+        </button>
+      </div>
+    </div>
+  </main>
+</div>

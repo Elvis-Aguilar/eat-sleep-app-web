@@ -1,13 +1,13 @@
 import { Component, inject, input, signal } from '@angular/core';
 import { ReservationService } from '../../service/reservation.service';
 import { Reservation } from '../../models/reservation.interface';
-import { Room } from '@patients/models/room.model';
 import { CurrencyPipe, NgClass, PercentPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { HotelService } from '../../service/hotel.service';
 import { Customer } from '../../models/customer.interface';
 import { CustomersService } from '../../service/customers.service';
 import { ReservationFilterPipe } from '../../pipes/reservation-filter.pipe';
+import { Room } from '../../models/hotel.interface';
 
 @Component({
   selector: 'app-manager-reservations',

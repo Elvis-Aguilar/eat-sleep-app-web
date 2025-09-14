@@ -1,6 +1,12 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { TarjetComponent } from '@shared/components/tarjet/tarjet.component';
+import { LocalStorageService } from '@shared/services/local-storage.service';
+import { EmployeeDto } from 'app/modules/MANAGER/models/employee.interface';
+import { Restaurant } from 'app/modules/MANAGER/models/restaurant.interface';
+import { EmployeeService } from 'app/modules/MANAGER/service/employee.service';
+import { RestaurantService } from 'app/modules/MANAGER/service/restaurant.service';
+import { Session } from 'app/modules/session/models/auth';
 
 @Component({
   selector: 'app-dashboard-restaurant',
@@ -9,30 +15,55 @@ import { TarjetComponent } from '@shared/components/tarjet/tarjet.component';
 })
 export class DashboardRestaurantComponent {
   private readonly route = inject(Router);
+  private readonly localStorageService = inject(LocalStorageService);
+  private readonly employeeService = inject(EmployeeService);
+  private readonly restaurantService = inject(RestaurantService);
 
-  ngOnInit() {}
+  session: Session = this.localStorageService.getState().session;
 
-  goAreas() {
-    this.route.navigate(['employee-management/areas']);
+  employee = signal<EmployeeDto | null>(null);
+  restaurant = signal<Restaurant | null>(null);
+
+  ngOnInit() {
+    this.getEmployeeById();
   }
 
-  goRegister() {
-    this.route.navigate(['employee-management/register']);
+  getEmployeeById() {
+    this.employeeService.getEmployeeById(this.session.employeeId).subscribe({
+      next: (value) => {
+        this.employee.set(value);
+        this.getRestauranById(value.restaurantId);
+      },
+      error: (err) => {
+        this.employee.set(null);
+      },
+    });
   }
 
-  goGestion() {
-    this.route.navigate(['employee-management/employees']);
+  getRestauranById(restaurantId: string) {
+    this.restaurantService.getRestaurantById(restaurantId).subscribe({
+      next: (value) => {
+        this.restaurant.set(value);
+      },
+      error: (err) => {
+        this.restaurant.set(null);
+      },
+    });
   }
 
-  goVacations() {
-    this.route.navigate(['employee-management/vacations']);
+  goDetails() {
+    this.route.navigate(['restaurant/details', this.restaurant()?.id]);
   }
 
-  goToPayment() {
-    this.route.navigate(['employee-management/payment-specialist']);
+  goDishes() {
+    this.route.navigate(['restaurant/dishes', this.restaurant()?.id]);
+  }
+
+  goSale() {
+    this.route.navigate(['restaurant/sale', this.restaurant()?.id]);
   }
 
   goReports() {
-    this.route.navigate(['employee-management/home-reports']);
+    this.route.navigate(['restaurant/orders', this.restaurant()?.id]);
   }
 }

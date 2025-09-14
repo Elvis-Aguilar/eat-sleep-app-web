@@ -1,0 +1,160 @@
+<div class="min-h-screen p-6 space-y-6">
+  <!-- Encabezado y filtro -->
+  <div
+    class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
+  >
+    <h2 class="text-2xl font-bold text-secondary">📦 Listado de Órdenes</h2>
+
+    <!-- Filtro por cliente -->
+    <div class="form-control w-full md:w-72">
+      <label class="label">
+        <span class="label-text">Filtrar por Cliente</span>
+      </label>
+      <select
+        class="select select-bordered w-full"
+        [ngModel]="filterCustomer()"
+        (change)="filterCustomer.set($any($event.target).value)"
+      >
+        <option value="">Todos los clientes</option>
+        @for (customer of customers(); track customer.id) {
+        <option [value]="customer.id">
+          {{ customer.fullName }} - {{ customer.cui }}
+        </option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <!-- Tabla de órdenes -->
+  <div class="card bg-base-100 shadow-lg border border-base-300 rounded-xl">
+    <div class="card-body">
+      <h3 class="card-title mb-4 text-primary">📋 Órdenes Registradas</h3>
+      <div class="overflow-x-auto rounded-lg border border-base-300">
+        <table class="table table-zebra w-full">
+          <thead>
+            <tr>
+              <th class="text-sm">Cliente</th>
+              <th class="text-sm">Restaurante</th>
+              <th class="text-sm">Fecha</th>
+              <th class="text-sm">Descuento</th>
+              <th class="text-sm">Total</th>
+              <th class="text-sm">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (order of orders() | appCustomerFilterOrder:filterCustomer();
+            track order.id) {
+            <tr>
+              <td>
+                <div>
+                  <p class="font-bold">{{ order.customerName }}</p>
+                  <p class="text-xs opacity-70">{{ order.customerCui }}</p>
+                </div>
+              </td>
+              <td>{{ order.restaurantName }}</td>
+              <td>{{ order.createdAt | date : "short" }}</td>
+              <td>{{ order.discountPercentage | percent }}</td>
+              <td class="font-bold text-primary">
+                {{ order.totalPrice | currency : "Q" }}
+              </td>
+              <td>
+                <button
+                  class="btn btn-sm btn-outline btn-primary"
+                  (click)="viewDetails(order)"
+                >
+                  Ver Detalles
+                </button>
+                <button
+                  class="btn btn-sm btn-outline btn-accent"
+                  (click)="dowloandPDf(order)"
+                >
+                  Descargar factura
+                </button>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<dialog #modalOrderDetail class="modal">
+  @if (selectedOrder() !== null) {
+  <div class="modal-box max-w-5xl">
+    <!-- Encabezado -->
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="font-bold text-xl text-primary flex items-center gap-2">
+        📄 Detalle de Orden
+      </h3>
+      <form method="dialog">
+        <button class="btn btn-sm btn-circle btn-ghost">✕</button>
+      </form>
+    </div>
+
+    <!-- Información general -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+      <div class="card bg-base-200 shadow-sm">
+        <div class="card-body p-4">
+          <h4 class="font-bold text-secondary">👤 Cliente</h4>
+          <p>{{ selectedOrder()?.customerName }}</p>
+          <p class="text-sm opacity-70">{{ selectedOrder()?.customerCui }}</p>
+        </div>
+      </div>
+
+      <div class="card bg-base-200 shadow-sm">
+        <div class="card-body p-4">
+          <h4 class="font-bold text-secondary">🏨 Restaurante</h4>
+          <p>{{ selectedOrder()?.restaurantName }}</p>
+          <p class="text-sm opacity-70">
+            {{ selectedOrder()?.createdAt | date : "short" }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla de detalles -->
+    <div class="overflow-x-auto rounded-lg border border-base-300">
+      <table class="table table-zebra w-full">
+        <thead>
+          <tr>
+            <th>Platillo</th>
+            <th>Cantidad</th>
+            <th>Precio Unit.</th>
+            <th>Costo Unit.</th>
+            <th>Descuento</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (detail of selectedOrder()?.details; track detail.id) {
+          <tr>
+            <td>{{ detail.dishName }}</td>
+            <td>{{ detail.quantity }}</td>
+            <td>{{ detail.unitPrice | currency : "Q" }}</td>
+            <td>{{ detail.unitCost | currency : "Q" }}</td>
+            <td>%{{ detail.discountPercentage }}</td>
+            <td class="font-bold text-primary">
+              {{ detail.subtotal | currency : "Q" }}
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Totales -->
+    <div class="mt-6 flex justify-end">
+      <div class="card bg-base-200 shadow-sm p-4">
+        <p class="font-bold text-lg">
+          Descuento aplicado: %{{ selectedOrder()?.discountPercentage }}
+        </p>
+        <p class="font-bold text-xl text-primary">
+          Total: {{ selectedOrder()?.totalPrice | currency : "Q" }}
+        </p>
+      </div>
+    </div>
+  </div>
+  }
+</dialog>

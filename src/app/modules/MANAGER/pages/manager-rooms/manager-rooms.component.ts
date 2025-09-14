@@ -7,9 +7,9 @@ import {
 } from '@angular/core';
 import { HotelService } from '../../service/hotel.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Room } from '@patients/models/room.model';
 import { CurrencyPipe } from '@angular/common';
 import { OpinionsModalComponent } from '../../components/opinions-modal/opinions-modal.component';
+import { Room } from '../../models/hotel.interface';
 
 @Component({
   selector: 'app-manager-rooms',

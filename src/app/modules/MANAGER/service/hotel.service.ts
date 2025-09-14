@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Room } from '@patients/models/room.model';
 import { ApiConfigService } from '@shared/services/api-config.service';
 import { Observable } from 'rxjs';
-import { Hotel } from '../models/hotel.interface';
+import { Hotel, Room } from '../models/hotel.interface';
 
 @Injectable({
   providedIn: 'root',

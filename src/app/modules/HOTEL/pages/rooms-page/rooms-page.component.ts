@@ -1,9 +1,9 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Room } from '@patients/models/room.model';
 import { LocalStorageService } from '@shared/services/local-storage.service';
 import { EmployeeDto } from 'app/modules/MANAGER/models/employee.interface';
+import { Room } from 'app/modules/MANAGER/models/hotel.interface';
 import { EmployeeService } from 'app/modules/MANAGER/service/employee.service';
 import { HotelService } from 'app/modules/MANAGER/service/hotel.service';
 import { Session } from 'app/modules/session/models/auth';

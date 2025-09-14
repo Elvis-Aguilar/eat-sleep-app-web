@@ -25,6 +25,7 @@ export class ApiConfigService {
   // restaurant
   public readonly API_RESTAURANT = `${this.API_BASE_RESTAURANT}/restaurants`;
   public readonly API_RESTAURANT_DISHES = `${this.API_BASE_RESTAURANT}/dishes`;
+  public readonly API_RESTAURANT_ORDERS = `${this.API_BASE_RESTAURANT}/orders`;
 
   //finance
   public readonly API_PAY_EMPLOYEES = `${this.API_BASE_FINANCE}/payments/employees`;

@@ -10,7 +10,6 @@ import { PromotionService } from '../../service/Promotion.service';
 import { NewPromotion, Promotion } from '../../models/promotion.interface';
 import { NgClass } from '@angular/common';
 import { HotelService } from '../../service/hotel.service';
-import { Room } from '@patients/models/room.model';
 import { CustomersService } from '../../service/customers.service';
 import { Customer } from '../../models/customer.interface';
 import { Dishes } from '../../models/restaurant.interface';
@@ -18,6 +17,7 @@ import { RestaurantService } from '../../service/restaurant.service';
 import { FormsModule } from '@angular/forms';
 import { AlertStore } from 'app/store/alert.store';
 import { HandlerError } from '@shared/utils/handlerError';
+import { Room } from '../../models/hotel.interface';
 
 @Component({
   selector: 'app-manager-promotion',

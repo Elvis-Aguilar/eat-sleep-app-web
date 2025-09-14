@@ -148,7 +148,7 @@
     <div class="mt-6 flex justify-end">
       <div class="card bg-base-200 shadow-sm p-4">
         <p class="font-bold text-lg">
-          Descuento aplicado: %{{ selectedOrder()?.discountPercentage }}
+          Descuento aplicado a cliente: %{{ selectedOrder()?.discountPercentage }}
         </p>
         <p class="font-bold text-xl text-primary">
           Total: {{ selectedOrder()?.totalPrice | currency : "Q" }}

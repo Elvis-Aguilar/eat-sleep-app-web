@@ -25,7 +25,7 @@ export interface OrderDetail {
 }
 
 export interface Order {
-  id: string; // UUID
+  id: string;
   customerId: string;
   totalPrice: number;
   discountPercentage: number;

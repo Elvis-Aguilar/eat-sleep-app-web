@@ -134,7 +134,6 @@ export class ReservationsPageComponent {
     return this.customers().find((cust) => cust.id === customerId) || null;
   }
 
-  // TODO: generar factura, interface que recibe segun datos
   generetedBillPDF(resrvation: Reservation) {
     const room = this.findRoomById(resrvation.roomId);
     const customer = this.findCustomerById(resrvation.customerId);

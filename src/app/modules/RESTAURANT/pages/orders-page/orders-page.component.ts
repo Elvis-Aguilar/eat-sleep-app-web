@@ -13,6 +13,7 @@ import { Customer } from 'app/modules/MANAGER/models/customer.interface';
 import { FormsModule } from '@angular/forms';
 import { CurrencyPipe, DatePipe, PercentPipe } from '@angular/common';
 import { CustomerFilterOrderPipe } from '../../pipes/customer-filter-order.pipe';
+import { BillService } from 'app/modules/HOTEL/services/Bill.service';
 
 @Component({
   selector: 'app-orders-page',
@@ -34,6 +35,7 @@ export class OrdersPageComponent {
   private readonly restaurantService = inject(RestaurantService);
   private readonly route = inject(ActivatedRoute);
   private readonly customerSevice = inject(CustomersService);
+  private readonly billService = inject(BillService);
 
   pinionId!: string;
   orders = signal<Order[]>([]);
@@ -105,6 +107,6 @@ export class OrdersPageComponent {
   }
 
   dowloandPDf(order: Order) {
-    //TODO export pdf
+    this.billService.exportBillOrder(order);
   }
 }

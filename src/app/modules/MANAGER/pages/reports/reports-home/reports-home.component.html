@@ -1,0 +1,71 @@
+<h1 class="text-xl font-bold text-center mb-6">Área de Reportes</h1>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+    <!-- Reporte 1 -->
+    <div class="card bg-base-100 shadow-xl rounded-xl border border-accent">
+        <div class="card-body">
+            <h2 class="card-title text-secondary">Reporte de ingresos</h2>
+            <p>Muestra el total y el listado detallado de todos los ingresos de un establecimiento dentro de un rango de fechas seleccionado.</p>
+            <div class="card-actions justify-end">
+                <button class="btn btn-sm btn-primary" (click)="goIncome()">Ver Reporte</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reporte 2 -->
+    <div class="card bg-base-100 shadow-xl rounded-xl border border-secondary">
+        <div class="card-body">
+            <h2 class="card-title text-primary">Reporte de consumos y alojamientos por cliente</h2>
+            <p>Consulta el total y el listado de todos los alojamientos y consumos de un cliente en un rango de fechas. Opcionalmente se puede filtrar por establecimiento.</p>
+            <div class="card-actions justify-end">
+                <button class="btn btn-sm btn-primary" (click)="goClient()">Ver Reporte</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reporte 3 -->
+    <div class="card bg-base-100 shadow-xl rounded-xl border border-primary">
+        <div class="card-body">
+            <h2 class="card-title text-accent">Reporte de empleados</h2>
+            <p>Visualiza el listado de empleados pertenecientes a un establecimiento, mostrando sus detalles básicos y relevantes.</p>
+            <div class="card-actions justify-end">
+                <button class="btn btn-sm btn-primary" (click)="goEmployees()">Ver Reporte</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reporte 4 -->
+    <div class="card bg-base-100 shadow-xl rounded-xl border border-accent">
+        <div class="card-body">
+            <h2 class="card-title text-secondary">Reporte de ganancias</h2>
+            <p>Genera un análisis de ganancias, mostrando un desglose de los ingresos y costos registrados en un rango de fechas.</p>
+            <div class="card-actions justify-end">
+                <button class="btn btn-sm btn-primary" (click)="goEarnings()">Ver Reporte</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reporte 5 -->
+    <div class="card bg-base-100 shadow-xl rounded-xl border border-secondary">
+        <div class="card-body">
+            <h2 class="card-title text-primary">Reporte de habitación más popular</h2>
+            <p>Identifica la habitación con mayor cantidad de alojamientos. Incluye un listado de reservas, con la opción de filtrar por hotel específico.</p>
+            <div class="card-actions justify-end">
+                <button class="btn btn-sm btn-primary" (click)="goPopularRoom()">Ver Reporte</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reporte 6 -->
+    <div class="card bg-base-100 shadow-xl rounded-xl border border-primary">
+        <div class="card-body">
+            <h2 class="card-title text-accent">Reporte de restaurante más popular</h2>
+            <p>Consulta el restaurante con mayores ingresos generados, mostrando además el listado de consumos asociados.</p>
+            <div class="card-actions justify-end">
+                <button class="btn btn-sm btn-primary" (click)="goPopularRestaurant()">Ver Reporte</button>
+            </div>
+        </div>
+    </div>
+
+</div>

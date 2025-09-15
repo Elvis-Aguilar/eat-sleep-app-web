@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { newOrder, Order } from 'app/modules/RESTAURANT/models/order.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RestaurantService {
   private readonly apiConfigService = inject(ApiConfigService);
@@ -14,7 +14,8 @@ export class RestaurantService {
   private readonly API_RESTAURANT = this.apiConfigService.API_RESTAURANT;
   private readonly API_RESTAURANT_DISHES =
     this.apiConfigService.API_RESTAURANT_DISHES;
-  private readonly API_RESTAURANT_ORDERS = this.apiConfigService.API_RESTAURANT_ORDERS;
+  private readonly API_RESTAURANT_ORDERS =
+    this.apiConfigService.API_RESTAURANT_ORDERS;
 
   constructor() {}
 
@@ -26,8 +27,10 @@ export class RestaurantService {
     return this._http.get<Restaurant>(`${this.API_RESTAURANT}/${id}`);
   }
 
-  getAllDishesByRestaurantId(restaurantId:string): Observable<Dishes[]> {
-    return this._http.get<Dishes[]>(`${this.API_RESTAURANT_DISHES}/restaurant/${restaurantId}`);
+  getAllDishesByRestaurantId(restaurantId: string): Observable<Dishes[]> {
+    return this._http.get<Dishes[]>(
+      `${this.API_RESTAURANT_DISHES}/restaurant/${restaurantId}`
+    );
   }
 
   getDishById(dishId: string): Observable<Dishes> {
@@ -38,12 +41,19 @@ export class RestaurantService {
     return this._http.get<Dishes[]>(`${this.API_RESTAURANT_DISHES}`);
   }
 
-  createOrder(order: newOrder ): Observable<void>{
+  createOrder(order: newOrder): Observable<void> {
     return this._http.post<void>(`${this.API_RESTAURANT_ORDERS}`, order);
   }
 
-  getAllOrderByRestaurantId(restaurantId:string): Observable<Order[]>{
-    return this._http.get<Order[]>(`${this.API_RESTAURANT_ORDERS}/restaurants/${restaurantId}`);
+  getAllOrderByRestaurantId(restaurantId: string): Observable<Order[]> {
+    return this._http.get<Order[]>(
+      `${this.API_RESTAURANT_ORDERS}/restaurants/${restaurantId}`
+    );
   }
 
+  reportOrderByRestaurantId(restaurantId: string, range: { startDate: string; endDate: string }): Observable<Order[]> {
+    return this._http.post<Order[]>(
+      `${this.API_RESTAURANT_ORDERS}/reports/${restaurantId}`, range
+    );
+  }
 }

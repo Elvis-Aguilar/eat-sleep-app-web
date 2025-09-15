@@ -36,4 +36,11 @@ export class ReservationService {
       `${this.API_RESERVATION}/customers/${customerId}`
     );
   }
+
+  getReportRangeDate(range: { startDate: string; endDate: string }) {
+    return this._http.post<Reservation[]>(
+      `${this.API_RESERVATION}/report`,
+      range
+    );
+  }
 }

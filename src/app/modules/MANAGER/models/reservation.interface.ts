@@ -10,4 +10,6 @@ export interface Reservation {
   totalCost: number;
   discountPercentage: number;
   roomId: string;
+  customerName:string;
+  roomName:string;
 }

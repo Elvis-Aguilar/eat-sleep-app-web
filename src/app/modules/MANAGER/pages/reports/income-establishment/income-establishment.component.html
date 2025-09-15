@@ -1,0 +1,220 @@
+<h1 class="text-2xl font-bold text-center mb-6">
+  Reporte de Ingresos por Establecimiento
+</h1>
+
+<!-- Filtros -->
+<div class="bg-base-100 shadow-xl rounded-xl p-5 mb-6 border border-success">
+  <h2 class="text-lg font-semibold mb-4">Filtros</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <!-- Tipo de Establecimiento -->
+    <div>
+      <label class="label">
+        <span class="label-text font-medium">Tipo de Establecimiento</span>
+      </label>
+      <select
+        class="select select-bordered w-full"
+        name="filterType"
+        [ngModel]="typeEstablishi()"
+        (change)="typeEstablishi.set($any($event.target).value)"
+      >
+        <option value="hotel">Hotel</option>
+        <option value="rest">Restaurante</option>
+      </select>
+    </div>
+    <!-- Establecimiento -->
+    @if (typeEstablishi() === 'hotel') {
+    <div>
+      <label class="label">
+        <span class="label-text font-medium">Hoteles</span>
+      </label>
+      <select
+        class="select select-bordered w-full"
+        name="filterhotel"
+        [ngModel]="hotelId()"
+        (change)="hotelId.set($any($event.target).value)"
+      >
+        @for (item of hotels(); track $index) {
+        <option [value]="item.id">{{ item.name }}</option>
+        }
+      </select>
+    </div>
+    }
+    <!-- restaruatnes -->
+    @if (typeEstablishi() === 'rest') {
+    <div>
+      <label class="label">
+        <span class="label-text font-medium">Restaurantes</span>
+      </label>
+      <select
+        class="select select-bordered w-full"
+        name="filterhotel"
+        [ngModel]="restaurantId()"
+        (change)="restaurantId.set($any($event.target).value)"
+      >
+        @for (item of restaurants(); track $index) {
+        <option [value]="item.id">{{ item.name }}</option>
+        }
+      </select>
+    </div>
+    }
+    <!-- Fecha Desde -->
+    <div>
+      <label class="label font-semibold">Desde:</label>
+      <input
+        type="date"
+        class="input input-bordered w-full"
+        [ngModel]="startDate()"
+        (ngModelChange)="startDate.set($event)"
+      />
+    </div>
+    <!-- Fecha Hasta -->
+    <div>
+      <label class="label font-semibold">Hasta:</label>
+      <input
+        type="date"
+        class="input input-bordered w-full"
+        [ngModel]="endDate()"
+        (ngModelChange)="endDate.set($event)"
+      />
+    </div>
+  </div>
+
+  <!-- Botones de acción -->
+  <div class="flex justify-end mt-4 space-x-2">
+    <!-- Botón Generar Reporte -->
+    <button class="btn btn-primary" (click)="generetedReport()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-5 h-5 mr-2"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M12 4v16m8-8H4"
+        />
+      </svg>
+      Generar Reporte
+    </button>
+
+    <!-- Botón Exportar a PDF -->
+    <button class="btn btn-outline btn-error">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-5 h-5 mr-2"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M19 11H5m14 0l-7-7m7 7l-7 7"
+        />
+      </svg>
+      Exportar PDF
+    </button>
+  </div>
+</div>
+
+<!-- Tabla de Resultados -->
+<div class="bg-base-100 shadow-xl rounded-xl p-5 mb-6 border border-base-300">
+  <h2 class="text-lg font-semibold mb-4">Resultados</h2>
+  <div class="overflow-x-auto">
+    <!-- hotels -->
+    @if (typeEstablishi()==='hotel') {
+    <table class="table table-zebra w-full">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th class="text-sm">Cliente</th>
+          <th class="text-sm">Fecha inicio</th>
+          <th class="text-sm">Fecha final</th>
+          <th class="text-sm">Precio por noche</th>
+          <th class="text-sm">Descuento (%)</th>
+          <th class="text-sm">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (reservation of reservations(); track reservation.id; let i =
+        $index){
+        <tr class="hover:bg-succes-content transition">
+          <td>{{ i + 1 }}</td>
+          <td>{{ reservation.customerName }}</td>
+          <td>{{ reservation.startDate }}</td>
+          <td>{{ reservation.endDate }}</td>
+          <td>
+            {{
+              reservation.pricePerDay | currency : "GTQ" : "symbol" : "1.2-2"
+            }}
+          </td>
+          <td>{{ reservation.discountPercentage | percent }}</td>
+          <td class="text-primary font-bold">
+            {{ reservation.totalPrice | currency : "GTQ" : "symbol" : "1.2-2" }}
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    }
+
+    <!-- restaurante -->
+    @if (typeEstablishi()==='rest') {
+    <table class="table table-zebra w-full">
+      <thead>
+        <tr>
+          <th class="text-sm">Cliente</th>
+          <th class="text-sm">Restaurante</th>
+          <th class="text-sm">Fecha</th>
+          <th class="text-sm">Descuento</th>
+          <th class="text-sm">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (order of orders(); track
+        order.id) {
+        <tr>
+          <td>
+            <div>
+              <p class="font-bold">{{ order.customerName }}</p>
+              <p class="text-xs opacity-70">{{ order.customerCui }}</p>
+            </div>
+          </td>
+          <td>{{ order.restaurantName }}</td>
+          <td>{{ order.createdAt | date : "short" }}</td>
+          <td>{{ order.discountPercentage | percent }}</td>
+          <td class="font-bold text-primary">
+            {{ order.totalPrice | currency : "Q" }}
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    }
+  </div>
+</div>
+
+<!-- Resumen -->
+<div class="bg-base-100 shadow-xl rounded-xl p-5 border border-info">
+  <h2 class="text-lg font-semibold mb-4">Resumen</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="stat">
+      <div class="stat-title">Total Registros</div>
+      <div class="stat-value">{{totalItems()}}</div>
+    </div>
+    <div class="stat">
+      <div class="stat-title">Ingresos Totales</div>
+      <div class="stat-value text-success">{{total() |  currency : "Q"}}</div>
+    </div>
+    <div class="stat">
+      <div class="stat-title">Periodo</div>
+      <div class="stat-value text-primary">
+        {{ startDate() }} - {{ endDate() }}
+      </div>
+    </div>
+  </div>
+</div>

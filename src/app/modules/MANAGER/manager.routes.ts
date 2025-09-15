@@ -60,9 +60,16 @@ const adminRoutes: Routes = [
   {
     path: 'reports',
     loadComponent: () =>
-      import('./pages/manager-employee/manager-employee.component').then(
-        (m) => m.ManagerEmployeeComponent
+      import('./pages/reports/reports-home/reports-home.component').then(
+        (m) => m.ReportsHomeComponent
       ),
+  },
+  {
+    path: 'reports/income-establishment',
+    loadComponent: () =>
+      import(
+        './pages/reports/income-establishment/income-establishment.component'
+      ).then((m) => m.IncomeEstablishmentComponent),
   },
 ];
 

@@ -1,3 +1,3 @@
 export const environment = {
-    API_ROOT: 'http://localhost:8080/api'
+    API_ROOT: 'https://sharp-rapidly-jennet.ngrok-free.app/api'
 };

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "hospital": {
+    "eat-sleep-manager": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/hospital",
+            "outputPath": "dist/eat-sleep-manager",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -86,13 +86,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "hospital:build:production"
+              "buildTarget": "eat-sleep-manager:build:production"
             },
             "development": {
-              "buildTarget": "hospital:build:development"
+              "buildTarget": "eat-sleep-manager:build:development"
             },
             "local": {
-              "buildTarget": "hospital:build:local"
+              "buildTarget": "eat-sleep-manager:build:local"
             }
           },
           "defaultConfiguration": "local"

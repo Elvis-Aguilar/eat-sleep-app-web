@@ -1,3 +1,3 @@
 export const environment = {
-    API_ROOT: 'http://localhost:8080/api'
+    API_ROOT: 'https://gateway-service-19607792534.us-central1.run.app/api'
 };

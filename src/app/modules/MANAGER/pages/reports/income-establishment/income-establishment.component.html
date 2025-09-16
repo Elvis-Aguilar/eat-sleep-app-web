@@ -152,7 +152,7 @@
               reservation.pricePerDay | currency : "GTQ" : "symbol" : "1.2-2"
             }}
           </td>
-          <td>{{ reservation.discountPercentage | percent }}</td>
+          <td>{{ reservation.discountPercentage }}%</td>
           <td class="text-primary font-bold">
             {{ reservation.totalPrice | currency : "GTQ" : "symbol" : "1.2-2" }}
           </td>
@@ -186,7 +186,7 @@
           </td>
           <td>{{ order.restaurantName }}</td>
           <td>{{ order.createdAt | date : "short" }}</td>
-          <td>{{ order.discountPercentage | percent }}</td>
+          <td>{{ order.discountPercentage }}%</td>
           <td class="font-bold text-primary">
             {{ order.totalPrice | currency : "Q" }}
           </td>

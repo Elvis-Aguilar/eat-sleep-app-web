@@ -15,7 +15,7 @@ import { AlertStore } from 'app/store/alert.store';
 
 @Component({
   selector: 'app-income-establishment',
-  imports: [FormsModule, PercentPipe, CurrencyPipe, DatePipe],
+  imports: [FormsModule, CurrencyPipe, DatePipe],
   templateUrl: './income-establishment.component.html',
 })
 export class IncomeEstablishmentComponent {

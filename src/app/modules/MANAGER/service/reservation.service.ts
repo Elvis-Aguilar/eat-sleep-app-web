@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { ApiConfigService } from '@shared/services/api-config.service';
 import { Observable } from 'rxjs';
 import { Reservation } from '../models/reservation.interface';
+import { NewBill } from 'app/modules/HOTEL/models/Bill.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -41,6 +42,13 @@ export class ReservationService {
     return this._http.post<Reservation[]>(
       `${this.API_RESERVATION}/report`,
       range
+    );
+  }
+
+  billReservation(newBill:NewBill) {
+    return this._http.put<Reservation[]>(
+      `${this.API_RESERVATION}/${newBill.refenceId}`,
+      newBill
     );
   }
 }

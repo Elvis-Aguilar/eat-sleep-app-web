@@ -19,7 +19,6 @@ import { BillService } from 'app/modules/HOTEL/services/Bill.service';
   selector: 'app-orders-page',
   imports: [
     FormsModule,
-    PercentPipe,
     CurrencyPipe,
     DatePipe,
     CustomerFilterOrderPipe,

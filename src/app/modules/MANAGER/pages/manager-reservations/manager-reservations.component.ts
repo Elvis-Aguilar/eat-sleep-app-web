@@ -11,7 +11,7 @@ import { Room } from '../../models/hotel.interface';
 
 @Component({
   selector: 'app-manager-reservations',
-  imports: [NgClass, PercentPipe, CurrencyPipe, ReservationFilterPipe],
+  imports: [NgClass, CurrencyPipe, ReservationFilterPipe],
   templateUrl: './manager-reservations.component.html',
 })
 export class ManagerReservationsComponent {

@@ -13,20 +13,19 @@ import { BillPdf, NewBill } from '../../models/Bill.interface';
 import { BillService } from '../../services/Bill.service';
 import { HandlerError } from '@shared/utils/handlerError';
 import { AlertStore } from 'app/store/alert.store';
-import { FormsModule } from "@angular/forms";
+import { FormsModule } from '@angular/forms';
 import { Room } from 'app/modules/MANAGER/models/hotel.interface';
 
 @Component({
   selector: 'app-reservations-page',
   imports: [
     NgClass,
-    PercentPipe,
     CurrencyPipe,
     ReservationFilterPipe,
     ReservarionFilterRoomPipe,
     ReservationFilterCustomerPipe,
-    FormsModule
-],
+    FormsModule,
+  ],
   templateUrl: './reservations-page.component.html',
 })
 export class ReservationsPageComponent {
@@ -108,6 +107,24 @@ export class ReservationsPageComponent {
       refenceId: resrvation.id,
       typeReference: 'reservation',
     };
+
+    this.reservationService.billReservation(newBill).subscribe({
+      next: (value) => {
+        this.alertStore.addAlert({
+          message: 'Pago Realizado con exito, puede generar la Factura en PDF',
+          type: 'success',
+        });
+        resrvation.state = 'Pagado';
+      },
+      error: (err) => {
+        const msgDefault =
+          'Error al registrar la promocion. Por favor, intente nuevamente más tarde.';
+        this.HandlerError.handleError(err, this.alertStore, msgDefault);
+        console.log(err);
+      },
+    });
+
+    return;
 
     this.billService.saveBill(newBill).subscribe({
       next: (value) => {
